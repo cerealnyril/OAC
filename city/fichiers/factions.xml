@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factions>
+	<faction id="0" nom="religieux">
+		<demographie>
+			<natalite>0.1</natalite>
+			<ratiohf>0.7</ratiohf>
+		</demographie>
+		<economie>
+			<energie>0.8</energie>
+			<nourriture>0.4</nourriture>
+			<soilent>1.0</soilent>
+			<habitation>0.7</habitation>
+			<education>1.0</education>
+		</economie>
+	</faction>
+	<faction id="1" nom="mafieux">
+		<demographie>
+			<natalite>0.4</natalite>
+			<ratiohf>0.2</ratiohf>
+		</demographie>
+		<economie>
+			<energie>0.7</energie>
+			<nourriture>0.9</nourriture>
+			<soilent>0.7</soilent>
+			<habitation>0.8</habitation>
+			<education>1.0</education>
+		</economie>
+	</faction>
+	<faction id="2" nom="geneticiens">
+		<demographie>
+			<natalite>0.8</natalite>
+			<ratiohf>0.5</ratiohf>
+		</demographie>
+		<economie>
+			<energie>0.7</energie>
+			<nourriture>0.9</nourriture>
+			<soilent>0.5</soilent>
+			<habitation>0.8</habitation>
+			<education>0.1</education>
+		</economie>
+	</faction>
+	<faction id="3" nom="mecaniciens">
+		<demographie>
+			<natalite>0.7</natalite>
+			<ratiohf>0.6</ratiohf>
+		</demographie>
+		<economie>
+			<energie>0.5</energie>
+			<nourriture>0.8</nourriture>
+			<soilent>0.7</soilent>
+			<habitation>0.8</habitation>
+			<education>0.1</education>
+		</economie>
+	</faction>
+	<faction id="4" nom="militaires">
+		<demographie>
+			<natalite>0.7</natalite>
+			<ratiohf>0.4</ratiohf>
+		</demographie>
+		<economie>
+			<energie>0.7</energie>
+			<nourriture>0.7</nourriture>
+			<soilent>0.8</soilent>
+			<habitation>0.7</habitation>
+			<education>0.4</education>
+		</economie>
+	</faction>
+	<faction id="5" nom="commercants">
+		<demographie>
+			<natalite>0.5</natalite>
+			<ratiohf>0.5</ratiohf>
+		</demographie>
+		<economie>
+			<energie>0.8</energie>
+			<nourriture>0.7</nourriture>
+			<soilent>0.7</soilent>
+			<habitation>0.9</habitation>
+			<education>0.6</education>
+		</economie>
+	</faction>
+</factions>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commerces>
+	<commerce type="4" nom="Armurerie">
+		<params>
+			<vendeurs>2</vendeurs>
+			<artisants>4</artisants>
+			<revenus>1</revenus>
+			<energie>5</energie>
+			<physique>0.9</physique>
+		</params>
+	</commerce>
+	<commerce type="9" nom="Tailleur">
+		<params>
+			<vendeurs>2</vendeurs>
+			<artisants>5</artisants>
+			<revenus>1</revenus>
+			<energie>2</energie>
+			<physique>0.3</physique>
+		</params>
+	</commerce>
+	<commerce type="8" nom="Pharmacie">
+		<params>
+			<vendeurs>3</vendeurs>
+			<artisants>5</artisants>
+			<revenus>1</revenus>
+			<energie>1</energie>
+			<physique>0.2</physique>
+		</params>
+	</commerce>
+	<commerce type="7" nom="Mechanique">
+		<params>
+			<vendeurs>2</vendeurs>
+			<artisants>6</artisants>
+			<revenus>2</revenus>
+			<energie>4</energie>
+			<physique>0.7</physique>
+		</params>
+	</commerce>
+	<commerce type="6" nom="Biogenetique">
+		<params>
+			<vendeurs>2</vendeurs>
+			<artisants>6</artisants>
+			<revenus>2</revenus>
+			<energie>5</energie>
+			<physique>0.4</physique>
+		</params>
+	</commerce>
+	<commerce type="5" nom="Bijouterie">
+		<params>
+			<vendeurs>4</vendeurs>
+			<artisants>6</artisants>
+			<revenus>3</revenus>
+			<energie>3</energie>
+			<physique>0.3</physique>
+		</params>
+	</commerce>
+</commerces>

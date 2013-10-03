@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metiers>
+	<metier type="4" nom="Armurerier">
+		<profil>
+			<education>0.2</education>
+			<qi>0.5</qi>
+			<ratiohf>0.2</ratiohf>
+			<age>0.8</age>
+			<desirabilite>0.7</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.1</faction>
+				<faction id="1">0.5</faction>
+				<faction id="2">0.2</faction>
+				<faction id="3">0.2</faction>
+				<faction id="4">1.0</faction>
+				<faction id="5">0.6</faction>
+		</factions>
+	</metier>
+	<metier type="9" nom="Tailleur">
+		<profil>
+			<education>0.5</education>
+			<qi>0.5</qi>
+			<ratiohf>0.6</ratiohf>
+			<age>0.6</age>
+			<desirabilite>0.7</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.1</faction>
+				<faction id="1">0.4</faction>
+				<faction id="2">0.2</faction>
+				<faction id="3">0.2</faction>
+				<faction id="4">0.3</faction>
+				<faction id="5">0.6</faction>
+		</factions>
+	</metier>
+	<metier type="8" nom="Pharmacien">
+		<profil>
+			<education>0.8</education>
+			<qi>0.6</qi>
+			<ratiohf>0.6</ratiohf>
+			<age>0.2</age>
+			<desirabilite>0.8</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">1.0</faction>
+				<faction id="1">0.1</faction>
+				<faction id="2">0.7</faction>
+				<faction id="3">0.1</faction>
+				<faction id="4">0.1</faction>
+				<faction id="5">0.6</faction>
+		</factions>
+	</metier>
+	<metier type="7" nom="Mechanicien">
+		<profil>
+			<education>1.0</education>
+			<qi>0.7</qi>
+			<ratiohf>0.4</ratiohf>
+			<age>0.4</age>
+			<desirabilite>0.8</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.1</faction>
+				<faction id="1">0.1</faction>
+				<faction id="2">0.2</faction>
+				<faction id="3">1.0</faction>
+				<faction id="4">0.7</faction>
+				<faction id="5">0.6</faction>
+		</factions>
+	</metier>
+	<metier type="6" nom="Biogeneticien">
+		<profil>
+			<education>1.0</education>
+			<qi>0.7</qi>
+			<ratiohf>0.6</ratiohf>
+			<age>0.2</age>
+			<desirabilite>0.8</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.1</faction>
+				<faction id="1">0.2</faction>
+				<faction id="2">1.0</faction>
+				<faction id="3">0.1</faction>
+				<faction id="4">0.1</faction>
+				<faction id="5">0.6</faction>
+		</factions>
+	</metier>
+	<metier type="5" nom="Bijoutier">
+		<profil>
+			<education>0.5</education>
+			<qi>0.5</qi>
+			<ratiohf>0.8</ratiohf>
+			<age>0.9</age>
+			<desirabilite>0.9</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.1</faction>
+				<faction id="1">0.8</faction>
+				<faction id="2">0.1</faction>
+				<faction id="3">0.1</faction>
+				<faction id="4">0.1</faction>
+				<faction id="5">0.8</faction>
+		</factions>
+	</metier>
+		<metier type="12" nom="Professeur">
+		<profil>
+			<education>1.0</education>
+			<qi>1.0</qi>
+			<ratiohf>0.5</ratiohf>
+			<age>1.0</age>
+			<desirabilite>1.0</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.1</faction>
+				<faction id="1">0.1</faction>
+				<faction id="2">0.9</faction>
+				<faction id="3">0.9</faction>
+				<faction id="4">0.6</faction>
+				<faction id="5">0.4</faction>
+		</factions>
+	</metier>
+	<metier type="16" nom="Juriste">
+		<profil>
+			<education>1.0</education>
+			<qi>1.0</qi>
+			<ratiohf>0.5</ratiohf>
+			<age>0.5</age>
+			<desirabilite>0.9</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.5</faction>
+				<faction id="1">0.1</faction>
+				<faction id="2">0.3</faction>
+				<faction id="3">0.3</faction>
+				<faction id="4">0.9</faction>
+				<faction id="5">0.8</faction>
+		</factions>
+	</metier>
+	<metier type="18" nom="Policier">
+		<profil>
+			<education>0.2</education>
+			<qi>0.2</qi>
+			<ratiohf>0.5</ratiohf>
+			<age>0.1</age>
+			<desirabilite>0.9</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.2</faction>
+				<faction id="1">0.0</faction>
+				<faction id="2">0.3</faction>
+				<faction id="3">0.3</faction>
+				<faction id="4">1.0</faction>
+				<faction id="5">0.5</faction>
+		</factions>
+	</metier>
+	<metier type="19" nom="Restaurateur">
+		<profil>
+			<education>0.2</education>
+			<qi>0.2</qi>
+			<ratiohf>0.5</ratiohf>
+			<age>0.5</age>
+			<desirabilite>0.5</desirabilite>
+		</profil>
+		<factions>
+				<faction id="0">0.5</faction>
+				<faction id="1">0.5</faction>
+				<faction id="2">0.5</faction>
+				<faction id="3">0.5</faction>
+				<faction id="4">0.5</faction>
+				<faction id="5">0.5</faction>
+		</factions>
+	</metier>
+</metiers>
