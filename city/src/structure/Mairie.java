@@ -68,15 +68,15 @@ public class Mairie extends Batiment{
 		rocades.clear();
 	}
 	/** met en place les structures externes de la ville que sont les frontieres */
-	public void updateFrontieres(ArrayList<Cell> non_contigue){
+	public void updateFrontieres(ArrayList<Cell> non_contigue, boolean to_x){
 		//test si il n'existe pas de cellules non contigue alors il n'y aura pas de frontiere
 		if(non_contigue.size() > 0){	
-			setFrontieres(non_contigue);
+			setFrontieres(non_contigue, to_x);
 			init = false;
 		}
 	}
 /*-----------------------PARTIE GESTION DES FRONTIERES DU QUARTIER------------------*/
-	private void setFrontieres(ArrayList<Cell> non_contigue){
+	private void setFrontieres(ArrayList<Cell> non_contigue, boolean on_x){
 		Iterator<Cell> iter = non_contigue.iterator();
 		ArrayList<Cell> tmp = new ArrayList<Cell>();
 		int pos_x = 0;
@@ -96,7 +96,11 @@ public class Mairie extends Batiment{
 			}
 			else{
 				if(tmp.size() > 0){
-					Frontiere frontiere = new Frontiere(tmp, to_y, to_x, this.id_quartier, this.jour);
+					boolean clos = false;
+					if(on_x && (to_x > to_y)){
+						clos = true;
+					}
+					Frontiere frontiere = new Frontiere(tmp, to_y, to_x, this.id_quartier, this.jour, clos);
 					frontieres.add(frontiere);
 					tmp.clear();
 				}
@@ -107,7 +111,11 @@ public class Mairie extends Batiment{
 			}
 		}
 		if(tmp.size() > 0){
-			Frontiere frontiere = new Frontiere(tmp, to_y, to_x, this.id_quartier, this.jour);
+			boolean clos = false;
+			if(on_x && (to_x > to_y)){
+				clos = true;
+			}
+			Frontiere frontiere = new Frontiere(tmp, to_y, to_x, this.id_quartier, this.jour, clos);
 			frontieres.add(frontiere);
 		}
 	}

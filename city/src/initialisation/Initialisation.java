@@ -93,6 +93,8 @@ public class Initialisation {
 			Quartier quartier = ville.getQuartier(iter_quartier.next());
 			quartier.updateLinkedStructures();
 		}
+		//cloture des rocades et des rails
+		//TODO
 		ParamsGlobals.MANAGER.registerObject(ville);
 	}
 	

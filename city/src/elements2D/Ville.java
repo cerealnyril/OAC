@@ -15,8 +15,8 @@ import com.badlogic.gdx.utils.ObjectMap;
 /** Classe qui contient les fonctions logiques de la ville */
 public class Ville {
 	
-//	private final ScreenManager jeu;
 	private Joueur joueur;
+	private Maglev maglev;
 	private int jour;
 	private int nb_current, nb_aim;
 
@@ -27,12 +27,12 @@ public class Ville {
 	private Array<Route> routes;
 	private Array<Canal> canaux;
 	private ObjectMap<Integer, Quartier> quartiers;
+	private Ligne ligne;
 	
 	private Controles controles;
 	
 	public Ville(ScreenManager jeu){
-//		this.jeu = jeu;
-		this.joueur = new Joueur(-1, new Vector2(0, 0), 5f, 0, 0.35f, 0.35f, 0);
+		this.joueur = new Joueur(-1, new Vector2(0, 0), 5f, 0, 0.25f, 0.25f, 0);
 		this.batiments = new ObjectMap<Integer, Batiment>();
 		this.blocs = new ObjectMap<Integer, Bloc>();
 		this.rles = new ObjectMap<Integer, Array<RLE>>();
@@ -44,10 +44,16 @@ public class Ville {
 		this.jour = 0;
 		this.nb_current = 0;
 		this.nb_aim = -1;
+		this.ligne = new Ligne();
+		this.maglev = new Maglev(-2, new Vector2(0,0), 100, 0, 1, 1, 103, ligne);
 	}
 	
 	public Joueur getJoueur(){
 		return this.joueur;
+	}
+	
+	public Maglev getMaglev(){
+		return this.maglev;
 	}
 	
 	public void update(){
@@ -79,6 +85,7 @@ public class Ville {
 			controles.resetLocks();
 		}
 		joueur.update();
+		maglev.update();
 	}
 	
 	/** Gestion de la collision entre le joueur et les batiments */
@@ -159,10 +166,19 @@ public class Ville {
 	public float getNbCurrent(){
 		return (float) this.nb_current;
 	}
-	
+	/** Renvois les objets graphiques de type rails */
+	public Array<Rail> getRails(){
+		return ligne.getRails();
+	}
+	/** Renvois les dernier rails pour lier les quartiers */
+	public Array<Rail> getClosureRails(){
+		return ligne.getCloseLine();
+	}
 /*--------------------------ARRIVEE DE NOUVEAUX OBJETS OU UPDATES-----------------------*/	
 	/** Gère l'arrive de nouveaux batiments */
 	private void upBatiment(Batiment bat){
+		System.out.println("Types des batiments en entrée "+bat.getType());
+		
 		//si le batiment existe deja
 		if(getBatimentFromId(bat.id) != null){
 			getBatimentFromId(bat.id).setPosition(bat.getPosition());
@@ -170,6 +186,10 @@ public class Ville {
 		//sinon on créé un nouveau 
 		else{
 			this.batiments.put(bat.id, bat);
+			// et en fonction de son type si c'est une station on l'ajoute à la ligne
+			if(bat.getType() == Identifiants.stationBat){
+				this.ligne.addStation(bat);
+			}
 		}
 	}
 	/** Gére l'arrivée de nouveaux blocs*/
@@ -206,6 +226,11 @@ public class Ville {
 		//Dans tous les cas on rajoute le nouvel objet
 		mes_rles.add(rle);
 		rles.put(rle.getID_q(), mes_rles);
+	}
+
+	/** S'occupe de modifier les points de jonction de la ligne*/
+	private void upLigne(int id, float x, float y, int jour, int id_q, int next, int id_quart_next){
+		ligne.update(id, x, y, jour, id_q, next, id_quart_next);
 	}
 	
 	/** Fonction qui translate tout sur la map quand la ville grandie */
@@ -251,21 +276,19 @@ public class Ville {
 	/** Transfert d'un quartier pour la dalle au sole */
 	private void upQuartier(Quartier quartier){
 		quartiers.put(quartier.id, quartier);
-		System.out.println("quartiers au total "+quartiers.size);
+//		System.out.println("quartiers au total "+quartiers.size);
 	}
 /*------------------------------------GESTION DES PAQUETS--------------------------------------------*/		
 	public void getMsg(Paquet pack){
 		nb_current++;
 		if(pack.getClasse() == 0){
 			int texY = pack.getTexY();
-//			System.out.println("Le qbloc qu'on a transmis a un quartier de "+pack.getId_q());
 			upBloc(new Bloc(pack.getId(), new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getId_q()));
 		}
 		//pour les batiments
 		else if(pack.getClasse() == 1){
 			int texX = pack.getTexX();
 			int texY = pack.getTexY();
-//			System.out.println("Le batiment qu'on a transmis a un quartier de "+pack.getId_q());
 			upBatiment(new Batiment(pack.getId(), new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getSens(), pack.getId_q()));
 		}
 		//pour les cellules genre routes rails canaux chemins
@@ -284,10 +307,7 @@ public class Ville {
 		//pour les RLE
 		else if(pack.getClasse() == 4){
 			if(pack.getType() == Identifiants.frontiereBat){
-				upRLE(new Frontiere(new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getId_q(), pack.getJour()));
-			}
-			else if(pack.getType() == Identifiants.rails){
-				upRLE(new Rail(new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getId_q(), pack.getJour()));
+				upRLE(new Frontiere(new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getId_q(), pack.getJour(), pack.getClos()));
 			}
 			else if(pack.getType() == Identifiants.roadBloc){
 				upRLE(new Rocade(new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getId_q(), pack.getJour()));
@@ -300,6 +320,10 @@ public class Ville {
 		//pour les information sur le quartier
 		else if(pack.getClasse() == 6){
 			upQuartier(new Quartier(pack.getId_q(), new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl()));
+		}
+		//pour les rails
+		else if(pack.getClasse() == 7){
+			upLigne(pack.getIDRail(), pack.getX(), pack.getY(), pack.getJour(), pack.getId_q(), pack.getNext(), pack.getIDQn());
 		}
 	}
 }

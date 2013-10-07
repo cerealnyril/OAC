@@ -68,13 +68,11 @@ public class ClientSelectMenu implements Screen {
 	public ClientSelectMenu(ScreenManager jeu) {
 		this.jeu = jeu;
 		this.mainMenu = false;
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 
 	@Override
 	public void render(float delta) {
-		//on créé la clear couleur
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		//on l'applique
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		manager.update(delta);

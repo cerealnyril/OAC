@@ -1,18 +1,53 @@
 package structure;
 
-import java.util.ArrayList;
-
 import tools.Identifiants;
-import topographie.Cell;
+import tools.ParamsGlobals;
 
 
 /** la classe rail stock les objets rails pour l'ensemble de la ville. Ces objets sont encodés selon le principe du RLE etendu à la direction */
-public class Rail extends RLE{
+public class Rail{
 
-	public Rail(ArrayList<Cell> cells, int x, int y, int id_q, int jour) {
-		super(cells, x, y, id_q, jour);
-		super.type = Identifiants.rails;
-		super.setCells();
+	private int type, jour, id_quartier, id;
+	private int x, y, id_rail_next, id_quart_next;
+	
+	public Rail(int x, int y, int id_q, int jour, int id, int idqn) {
+		this.type = Identifiants.rails;
+		this.x = x;
+		this.y = y;
+		this.id_quartier = id_q;
+		this.id = id;
+		this.id_quart_next = idqn;
+		this.id_rail_next = -1;
+		ParamsGlobals.MANAGER.updateObject(this);
 	}
-
+/*-------------------------------SETTEUR--------------------------------*/
+	/** Permet de donner un indentifiant au rail suivant */
+	public void setNext(int id_rail_next){
+		this.id_rail_next = id_rail_next;
+	}
+/*------------------------------ACCESSEURS------------------------------*/	
+	public int getID(){
+		return this.id;
+	}
+	public int getIDQuartier(){
+		return this.id_quartier;
+	}
+	public int getType(){
+		return this.type;
+	}
+	public int getJour() {
+		return this.jour;
+	}
+	public int getX() {
+		return this.x;
+	}
+	public int getY() {
+		return this.y;
+	}
+	public int getNext(){
+		return this.id_rail_next;
+	}
+	public int getIDQn(){
+		return this.id_quart_next;
+	}
 }

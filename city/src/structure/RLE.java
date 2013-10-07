@@ -28,6 +28,7 @@ public class RLE {
 		}
 		this.tailleX = x;
 		this.tailleY = y;
+		this.id_quartier = id_q;
 	}
 /*-------------------------ACCESSEURS-------------------------*/	
 	public int getType(){
@@ -76,12 +77,6 @@ public class RLE {
 		Iterator<Cell> iter = this.cells.iterator();
 		while(iter.hasNext()){
 			Cell cell = iter.next();
-	/*		if(this.type == Identifiants.roadBloc){
-				cell.resetBatType(this.type);
-			}
-			else{
-				cell.resetUpperLayer(this.type);
-			}*/
 			if(start_x > cell.getX()){
 				start_x = cell.getX();
 			}
@@ -91,17 +86,4 @@ public class RLE {
 		}
 		ParamsGlobals.MANAGER.updateObject(this);
 	}
-/*	public void releaseCells(){
-		Iterator<Cell> iter = this.cells.iterator();
-		while(iter.hasNext()){
-			Cell cell = iter.next();
-			if(this.type == Identifiants.roadBloc){
-				cell.resetBatType(Identifiants.vide);
-			}
-			else{
-				cell.resetUpperLayer(Identifiants.vide);
-			}
-			
-		}
-	}*/
 }

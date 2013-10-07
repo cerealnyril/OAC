@@ -26,6 +26,7 @@ public class ServerManageMenu implements Screen {
 		this.jeu = jeu;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
+		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 /*		serveur = new Serveur(ReseauGlobals.SERVEUR_PORT);
 		try {
 			logger.info("Lancement du serveur.");
@@ -37,7 +38,7 @@ public class ServerManageMenu implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+		
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		camera.update();

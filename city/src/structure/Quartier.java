@@ -173,10 +173,17 @@ public class Quartier {
 			if(mairie != null){
 				results.addAll(mairie.getRLEs());
 			}
+		}
+		return results;
+	}
+	/** On a mis les rails dans un truc a part donc c'est un peut comme les RLE */
+	public ArrayList<Rail> getRails(){
+		ArrayList<Rail> results = new ArrayList<Rail>();
+		if(getAdministration() != null){
 			//pour la station qui contient les chemins de fer
 			Station station = getAdministration().getStation();
 			if(station != null){
-				results.addAll(station.getRLEs());
+				results.addAll(station.getRails());
 			}
 		}
 		return results;

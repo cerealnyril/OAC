@@ -19,6 +19,7 @@ public class Station extends Batiment{
 	private int jour;
 	private Noeud limit_haut, limit_bas, limit_droite, limit_gauche, depart;
 	private boolean haut, bas, gauche, droite;
+	private int q_h, q_b, q_g, q_d;
 	
 	public Station(int id_b, int id_q) {
 		super(id_b, id_q);
@@ -41,8 +42,8 @@ public class Station extends Batiment{
 /*==============================FONCTIONNALITES METRO AERIEN==============================*/
 /*----------------------------------------ACCESSEURS-----------------------------------*/
 	/** retourne les rails eux memes */
-	public ArrayList<Rail> getRLEs(){
-//		System.out.println("J'ai combien de rails dans ma besace??? "+rails.size());
+	public ArrayList<Rail> getRails(){
+		System.out.println("J'ai combien de rails dans ma besace??? "+rails.size());
 		return rails;
 	}
 	/** dit si il y'a une zone courante */
@@ -54,10 +55,6 @@ public class Station extends Batiment{
 	}
 	/** Fonction de nettoyage*/
 	public void clearStructures(){
-/*		Iterator<Rail> iter = rails.iterator();
-		while(iter.hasNext()){
-			iter.next().releaseCells();
-		}*/
 		rails.clear();
 	}
 /*----------------------------------------SETTEURS-------------------------------------*/
@@ -75,15 +72,19 @@ public class Station extends Batiment{
 		zone_quartier.setStation(zone.getCell((int) zone.getCentreX(), (int) zone.getCentreY()));
 		if(zone_haut != null && zone_haut.getIdQuartier() != -1){
 			this.haut = true;
+			this.q_h = zone_haut.getIdQuartier();
 		}
 		if(zone_bas != null && zone_bas.getIdQuartier() != -1){
 			this.bas = true;
+			this.q_b = zone_bas.getIdQuartier();
 		}
 		if(zone_gauche != null && zone_gauche.getIdQuartier() != -1){
 			this.gauche = true;
+			this.q_g = zone_gauche.getIdQuartier();
 		}
 		if(zone_droite != null && zone_droite.getIdQuartier() != -1){
 			this.droite = true;
+			this.q_d = zone_droite.getIdQuartier();
 		}
 	}
 	
@@ -96,61 +97,72 @@ public class Station extends Batiment{
 	public void updateRails(){
 		computePaths(depart);
 		if(limit_haut != null){
+			int id_haut = 0;
 			List<Noeud> etapes = getEtapes(limit_haut);
 			Iterator<Noeud> iter = etapes.iterator();
-			Noeud source  = depart;
 			Noeud cible = null;
+			Rail previous = null;
 			while(iter.hasNext()){
+				if(previous != null){
+					previous.setNext(id_haut);
+				}
 				cible = iter.next();
-				makeRail(source, cible);
-				source = cible;
+				previous = makeRail(cible, id_haut, this.q_h);
+				id_haut++;
 			}
 		}
 		if(limit_bas != null){
+			int id_bas = 0;
 			List<Noeud> etapes = getEtapes(limit_bas);
 			Iterator<Noeud> iter = etapes.iterator();
-			Noeud source  = depart;
 			Noeud cible = null;
+			Rail previous = null;
 			while(iter.hasNext()){
+				if(previous != null){
+					previous.setNext(id_bas);
+				}
 				cible = iter.next();
-				makeRail(source, cible);
-				source = cible;
+				previous = makeRail(cible, id_bas, this.q_b);
+				id_bas++;
 			}
 		}
 		if(limit_gauche != null){
+			int id_gauche = 0;
 			List<Noeud> etapes = getEtapes(limit_gauche);
 			Iterator<Noeud> iter = etapes.iterator();
-			Noeud source  = depart;
 			Noeud cible = null;
+			Rail previous = null;
 			while(iter.hasNext()){
+				if(previous != null){
+					previous.setNext(id_gauche);
+				}
 				cible = iter.next();
-				makeRail(source, cible);
-				source = cible;
+				previous = makeRail(cible, id_gauche, this.q_g);
+				id_gauche++;
 			}
 		}
 		if(limit_droite != null){
+			int id_droite = 0;
 			List<Noeud> etapes = getEtapes(limit_droite);
 			Iterator<Noeud> iter = etapes.iterator();
-			Noeud source  = depart;
-			Noeud cible = null;
+			Noeud cible = null; 
+			Rail previous = null;
 			while(iter.hasNext()){
+				if(previous != null){
+					previous.setNext(id_droite);
+				}
 				cible = iter.next();
-				makeRail(source, cible);
-				source = cible;
+				previous = makeRail(cible, id_droite, this.q_d);
+				id_droite++;
 			}
 		}
 	}
 	/** dit si la suite de cellules est sur X */
-	private void makeRail(Noeud source, Noeud cible){
-		ArrayList<Cell> tmp = this.zone_quartier.getCellLine(source.getCell(), cible.getCell());
-		int x = tmp.size();
-		int y = 1;
-		if(source.getCell().getY() == cible.getCell().getY()){
-			x = 1;
-			y = tmp.size();
-		}
-		Rail rail = new Rail(tmp, y, x, this.id_quartier, this.jour);
+	private Rail makeRail(Noeud cible, int id, int id_q){
+		//taille x, taille y, jour, id_rail_next, id_quartier_next
+		Rail rail = new Rail(cible.getCell().getX(), cible.getCell().getY(), this.id_quartier, this.jour, id, id_q);
 		rails.add(rail);
+		return rail;
 	}
 	private void makeNoeuds(){
 		Cell cell_haut = null;
@@ -293,25 +305,29 @@ public class Station extends Batiment{
 			if(voisin_bas != null){
 				ArrayList<Cell> path = zone_quartier.getClearPath(noeud_source.getCell(), voisin_bas.getCell());
 				if(path != null){
-					tmp.add(new Arc(voisin_bas, 1.0));
+					//tmp.add(new Arc(voisin_bas, 1.0));
+					tmp.add(new Arc(voisin_bas, path.size()));
 				}
 			}
 			if(voisin_haut != null){
 				ArrayList<Cell> path = zone_quartier.getClearPath(noeud_source.getCell(), voisin_haut.getCell());
 				if(path != null){
-					tmp.add(new Arc(voisin_haut, 1.0));
+					//tmp.add(new Arc(voisin_haut, 1.0));
+					tmp.add(new Arc(voisin_haut, path.size()));
 				}
 			}
 			if(voisin_gauche != null){
 				ArrayList<Cell> path = zone_quartier.getClearPath(noeud_source.getCell(), voisin_gauche.getCell());
 				if(path != null){
-					tmp.add(new Arc(voisin_gauche, 1.0));
+					//tmp.add(new Arc(voisin_gauche, 1.0));
+					tmp.add(new Arc(voisin_gauche, path.size()));
 				}
 			}
 			if(voisin_droite != null){
 				ArrayList<Cell> path = zone_quartier.getClearPath(noeud_source.getCell(), voisin_droite.getCell());
 				if(path != null){
-					tmp.add(new Arc(voisin_droite, 1.0));
+					//tmp.add(new Arc(voisin_droite, 1.0));
+					tmp.add(new Arc(voisin_droite, path.size()));
 				}
 			}
 			Arc[] arcs = new Arc[tmp.size()];

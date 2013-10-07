@@ -10,5 +10,7 @@ public abstract class EntiteStatic extends Entite{
 		super(id, position, width, height, id_q);
 		this.type = type;
 	}
-
+	public int getType(){
+		return this.type;
+	}
 }

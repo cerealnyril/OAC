@@ -26,10 +26,12 @@ public class Vue2D  implements Screen{
 		this.ville = ville;
 		renderVille = new VilleRender(ville);
 		loading = new Loading(ville);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 
 	@Override
 	public void render(float delta) {
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		if(!loading.isLoaded()){
 			//on rend l'ecran de chargement
 			loading.render(delta);

@@ -8,7 +8,7 @@ import tools.ParamsGlobals;
 
 
 public class Cell{
-	private int bloc_type, bat_type, upper_layer_type;
+	private int bloc_type, bat_type;
 	private int x_cord, y_cord;
 	private double z_cord;
 	private double score;
@@ -18,7 +18,6 @@ public class Cell{
 	public Cell(int x, int y){
 		this.bloc_type = Identifiants.vide;
 		this.bat_type = Identifiants.vide;
-		this.upper_layer_type = -1;
 		this.x_cord = x;
 		this.y_cord = y;
 		this.z_cord = -1;
@@ -93,10 +92,6 @@ public class Cell{
 	public void resetBatType(int t){
 		this.bat_type = t;
 	}
-	/** change le type du ciel */
-	public void resetUpperLayer(int t){
-		this.upper_layer_type = t;
-	}
 	/** renvois le type du batiment */
 	public int getBatType(){
 		return this.bat_type;
@@ -115,9 +110,6 @@ public class Cell{
 	}
 	public int getBlocType(){
 		return this.bloc_type;
-	}
-	public int getUpperLayer(){
-		return this.upper_layer_type;
 	}
 /*-----------------UTILITAIRE-------------------*/
 	/** dit si le type est considéré comme libre pour le cas d'un bloc */

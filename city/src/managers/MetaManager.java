@@ -152,6 +152,11 @@ public class MetaManager {
 			RLE rle = (RLE) test;
 			updateRLE(rle);
 		}
+		//si c'est un rail
+		else if(test instanceof Rail){
+			Rail rail = (Rail) test;
+			updateRail(rail);
+		}
 	}
 	/** met à jour un quartier dans les différents managers */
 	private void updateQuartier(Quartier quartier){
@@ -185,6 +190,10 @@ public class MetaManager {
 	/** met à jour une portion de canal */
 	private void updateCanal(Cell cell){
 		com.updateCanal(cell);
+	}
+	/** met à jour une portion de chemin */
+	private void updateRail(Rail rail){
+		com.updateRail(rail);
 	}
 /*------------------------------------------AJOUT--------------------------------------------------*/
 	/** stockage d'une nouvel objet 

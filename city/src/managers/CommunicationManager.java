@@ -16,8 +16,10 @@ import reseau.Paquet;
 import reseau.Serveur;
 import structure.Batiment;
 import structure.Bloc;
+import structure.Frontiere;
 import structure.Quartier;
 import structure.RLE;
+import structure.Rail;
 import tools.Identifiants;
 import tools.ParamsGlobals;
 import tools.ReseauGlobals;
@@ -30,6 +32,7 @@ public class CommunicationManager {
 	private Map<Integer, Batiment> batiments = Collections.synchronizedMap(new TreeMap<Integer, Batiment>());
 	private Map<Integer, Quartier> quartiers = Collections.synchronizedMap(new TreeMap<Integer, Quartier>());
 	private List<RLE> rles = Collections.synchronizedList(new ArrayList<RLE>());
+	private List<Rail> rails = Collections.synchronizedList(new ArrayList<Rail>());
 	private List<Cell> routes = Collections.synchronizedList(new ArrayList<Cell>());
 	private List<Cell> canaux = Collections.synchronizedList(new ArrayList<Cell>());
 	private List<Cell> chemins = Collections.synchronizedList(new ArrayList<Cell>());
@@ -80,6 +83,11 @@ public class CommunicationManager {
 			else batiments.put(id, batiment);
 		}		
 	}
+	public void updateRail(Rail rail){
+		synchronized(rail){
+			rails.add(rail);
+		}
+	}
 	
 	public void updateRLE(RLE rle){
 		synchronized(rle){
@@ -116,8 +124,8 @@ public class CommunicationManager {
 		   			ArrayList<Cell> routes = ParamsGlobals.VILLE.getAllRoutes();
 		   			ArrayList<Cell> canaux = ParamsGlobals.VILLE.getAllCanaux();
 		   			ArrayList<RLE> rles = ParamsGlobals.VILLE.getAllRLEs();
-		   			
-		   			int total = quartiers.size()+blocs.size()+bats.size()+routes.size()+canaux.size()+rles.size();
+		   			ArrayList<Rail> rails = ParamsGlobals.VILLE.getAllRails();
+		   			int total = quartiers.size()+blocs.size()+bats.size()+routes.size()+canaux.size()+rles.size()+rails.size();
 		   			
 		   			//le premier message pour annoncer combien j'en envois
 		   			Message msg = new Message(idClient, getVillePack(total), port, ia);
@@ -161,10 +169,16 @@ public class CommunicationManager {
 						msg = new Message(idClient, getCellPack(canal, canal.getIDQuartier()), port, ia);
 						serveur.send(msg);
 					}
-					//les rle : rails, frontieres, rocades
+					//les rle : frontieres, rocades
 					Iterator<RLE> iter_rle = rles.iterator();
 					while(iter_rle.hasNext()){
 						msg = new Message(idClient, getRLEPack(iter_rle.next()), port, ia);
+						serveur.send(msg);
+					}
+					//les rails
+					Iterator<Rail> iter_rail = rails.iterator();
+					while(iter_rail.hasNext()){
+						msg = new Message(idClient, getRailPack(iter_rail.next()), port, ia);
 						serveur.send(msg);
 					}
 		   		}
@@ -299,6 +313,13 @@ public class CommunicationManager {
 	}
 	/** Creation d'un paquet batiment */
 	private Paquet getRLEPack(RLE rle){
+		int clos = 0;
+		if(rle.getType() == Identifiants.frontiereBat){
+			Frontiere frontiere = (Frontiere) rle;
+			if(frontiere.getClos()){
+				clos = 1;
+			}
+		}
 		Paquet pack = new Paquet(
 								rle.getTailleX(), 
 								rle.getTailleY(), 
@@ -307,11 +328,33 @@ public class CommunicationManager {
 								1, //Z
 								0, 
 								0,//rle.getTexY(), 
-								0,
+								clos, // deviens le boolean de cloture
 								rle.getType(), 
 								rle.getJour(),
 								4,
 								rle.getIDQuartier(),
+								false,//gimmi
+								false,//ak
+								false,//ping
+								false);//pong
+		return pack;
+	}
+	/** Création d'un paquet de rail */
+	/** Creation d'un paquet batiment */
+	private Paquet getRailPack(Rail rail){
+		Paquet pack = new Paquet(
+								rail.getID(), //l'identifiant en fait l'ordre du rail
+								0, 
+								rail.getX()-0.5f, 
+								rail.getY()-0.5f, 
+								2, //Z
+								rail.getIDQn(),//le total on s'en fout en fait... on vas dire le quartier suivant
+								rail.getNext(),//rle.getTexY(), -> le prochain rail
+								0,
+								rail.getType(), 
+								rail.getJour(),
+								7,
+								rail.getIDQuartier(),
 								false,//gimmi
 								false,//ak
 								false,//ping

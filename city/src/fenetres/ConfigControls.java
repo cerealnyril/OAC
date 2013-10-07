@@ -14,11 +14,12 @@ public class ConfigControls implements Screen{
 	
 	public ConfigControls(ScreenManager jeu) {
 		this.jeu = jeu;
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 	}

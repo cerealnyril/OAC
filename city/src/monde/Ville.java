@@ -16,6 +16,7 @@ import structure.Croissance;
 import structure.Frontiere;
 import structure.Quartier;
 import structure.RLE;
+import structure.Rail;
 import tools.ParamsGlobals;
 import topographie.Cell;
 
@@ -164,6 +165,15 @@ public class Ville {
 		Iterator<Integer> iter = getQuartiersID().iterator();
 		while(iter.hasNext()){
 			result.add(getQuartier(iter.next()));
+		}
+		return result;
+	}
+	/** Retourne tous les rails */
+	public ArrayList<Rail> getAllRails(){
+		ArrayList<Rail> result = new ArrayList<Rail>();
+		Iterator<Integer> iter = getQuartiersID().iterator();
+		while(iter.hasNext()){
+			result.addAll(getQuartier(iter.next()).getRails());
 		}
 		return result;
 	}

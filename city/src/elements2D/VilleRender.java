@@ -2,6 +2,8 @@ package elements2D;
 
 import java.util.Iterator;
 
+import tools.Identifiants;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -19,17 +21,19 @@ public class VilleRender {
 	private Ville ville;
 	private SpriteBatch batch;
 	private Joueur joueur;
+	private Maglev maglev;
 	private OrthographicCamera camera;
 	private float camWidth, camHeight;
 	//pour les structures statiques des tableaux 
 	ObjectMap<Integer, Batiment> batiments;
 	ObjectMap<Integer, Bloc> blocs;
 	//pour le debug des collisions
-	ShapeRenderer sr;
+//	ShapeRenderer sr;
 	
 	public VilleRender(Ville ville){
 		this.ville = ville;
 		joueur = ville.getJoueur();
+		maglev = ville.getMaglev();
 		
 		this.camera = new OrthographicCamera();
 		joueur.giveCamera(this.camera);
@@ -45,14 +49,14 @@ public class VilleRender {
 		batch.setProjectionMatrix(camera.combined);
 		camera.update();
 		//pour le debug des collisions
-		sr = new ShapeRenderer();
-		sr.setColor(Color.RED);
+//		sr = new ShapeRenderer();
+//		sr.setColor(Color.RED);
 		
 	}
 	
 	public void render(){
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		
 		this.camera.position.set(joueur.position.x, joueur.position.y, 0);
 		batch.setProjectionMatrix(camera.combined);
 		camera.update();
@@ -109,12 +113,7 @@ public class VilleRender {
 						tmp_canal.getSens(), 0, 0, tmp_canal.getTexture().getWidth(), tmp_canal.getTexture().getHeight(), 
 						false, false);
 			}
-			//la texture du joueur, sa position sur x et y, le milieu du joeur sur x et y (pour que ça tourne sur lui meme), la taille largeur hauteur, le scale a 1, 1 le fait de prendre en compte la rotation
-			batch.draw(joueur.getTexture(), joueur.getPosition().x, joueur.getPosition().y, 
-					joueur.getWidth()/2, joueur.getHeight()/2, joueur.getWidth(), joueur.getHeight(), 1, 1, 
-					joueur.getRotation(), 0, 0, joueur.getTexture().getWidth(), joueur.getTexture().getHeight(), 
-					false, false);
-			//et on dessine les rles
+			//on dessine les rles
 			RLE tmp_rle;
 			Iterator<Integer> iter_rle = ville.getRLEs().keys().iterator();
 			while(iter_rle.hasNext()){
@@ -128,13 +127,42 @@ public class VilleRender {
 							false, false);
 				}
 			}
+			//la texture du joueur, sa position sur x et y, le milieu du joeur sur x et y (pour que ça tourne sur lui meme), la taille largeur hauteur, le scale a 1, 1 le fait de prendre en compte la rotation
+			batch.draw(joueur.getTexture(), joueur.getPosition().x, joueur.getPosition().y, 
+					joueur.getWidth()/2, joueur.getHeight()/2, joueur.getWidth(), joueur.getHeight(), 1, 1, 
+					joueur.getRotation(), 0, 0, joueur.getTexture().getWidth(), joueur.getTexture().getHeight(), 
+					false, false);
+			//et on dessine les rails
+			Rail tmp_rail;
+			Iterator<Rail> iter_rail = ville.getRails().iterator();
+			while(iter_rail.hasNext()){
+				tmp_rail = iter_rail.next();
+				batch.draw(tmp_rail.getTexture(), tmp_rail.getPosition().x, tmp_rail.getPosition().y, 
+						tmp_rail.getWidth()/2, tmp_rail.getHeight()/2, tmp_rail.getWidth(), tmp_rail.getHeight(), 1, 1, 
+						0, 0, 0, tmp_rail.getTexture().getWidth(), tmp_rail.getTexture().getHeight(), 
+						false, false);
+			}
+			//on ferme les rails
+			iter_rail = ville.getClosureRails().iterator();
+			while(iter_rail.hasNext()){
+				tmp_rail = iter_rail.next();
+				batch.draw(tmp_rail.getTexture(), tmp_rail.getPosition().x, tmp_rail.getPosition().y, 
+						tmp_rail.getWidth()/2, tmp_rail.getHeight()/2, tmp_rail.getWidth(), tmp_rail.getHeight(), 1, 1, 
+						0, 0, 0, tmp_rail.getTexture().getWidth(), tmp_rail.getTexture().getHeight(), 
+						false, false);
+			}
+			//on affiche le ou les maglevs
+			batch.draw(maglev.getTexture(), maglev.getPosition().x, maglev.getPosition().y, 
+					maglev.getWidth()/2, maglev.getHeight()/2, maglev.getWidth(), maglev.getHeight(), 1, 1, 
+					maglev.getRotation(), 0, 0, maglev.getTexture().getWidth(), maglev.getTexture().getHeight(), 
+					false, false);
 		batch.end();
 		
 		//pour le debug des collisions
-		sr.setProjectionMatrix(camera.combined);
-		sr.begin(ShapeType.Rectangle);
-		sr.rect(joueur.getPosition().x, joueur.getPosition().y, joueur.getWidth(), joueur.getHeight());
-		sr.end();
+//		sr.setProjectionMatrix(camera.combined);
+//		sr.begin(ShapeType.Rectangle);
+//		sr.rect(joueur.getPosition().x, joueur.getPosition().y, joueur.getWidth(), joueur.getHeight());
+//		sr.end();
 	}
 	
 	public void dispose(){

@@ -16,6 +16,7 @@ public class TexRefs {
 	public static Texture vagueTex = new Texture(Gdx.files.internal("graphics2D/vague.png"));
 	//toutes les textures pour les elements statics affiliés au blocs
 	public static Texture frontiere1Tex = new Texture(Gdx.files.internal("graphics2D/frontiere1.png"));
+	public static Texture frontiere_closTex = new Texture(Gdx.files.internal("graphics2D/frontiere_cloture.png"));
 	public static Texture frontiere2Tex = new Texture(Gdx.files.internal("graphics2D/frontiere2.png"));
 	public static Texture rail1Tex = new Texture(Gdx.files.internal("graphics2D/rail.png"));
 	public static Texture rail2Tex = new Texture(Gdx.files.internal("graphics2D/rail2.png"));
@@ -40,4 +41,8 @@ public class TexRefs {
 	public static Texture canal2Tex = new Texture(Gdx.files.internal("graphics2D/canal2.png"));
 	public static Texture canal3Tex = new Texture(Gdx.files.internal("graphics2D/canal3.png"));
 	public static Texture canal4Tex = new Texture(Gdx.files.internal("graphics2D/canal4.png"));
+	//pour les tests
+	public static Texture testTex = new Texture(Gdx.files.internal("graphics2D/test.png"));
+	//pour les vehicules
+	public static Texture maglevTex = new Texture(Gdx.files.internal("graphics2D/maglev.png"));
 }

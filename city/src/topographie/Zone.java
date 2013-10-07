@@ -255,7 +255,6 @@ public class Zone {
 	/** enregistre la cellule qui servira de station de depars */
 	public void setStation(Cell cell){
 		this.station = getStation(cell);
-		station.resetUpperLayer(Identifiants.rails);
 	}
 	private Cell getStation(Cell cell){
 		Cell test = null;
@@ -808,7 +807,7 @@ public class Zone {
 		return result;
 	}
 	/** Retourne les cellules entre deux cellules alignées */
-	public ArrayList<Cell> getCellsOnAxe(Cell source, Cell cible){
+/*	public ArrayList<Cell> getCellsOnAxe(Cell source, Cell cible){
 		ArrayList<Cell> result = new ArrayList<Cell>();
 		if(source.getX() == cible.getX()){
 			int start = source.getY();
@@ -857,7 +856,7 @@ public class Zone {
 			}
 		}
 		return result;
-	}
+	}*/
 /*--------------------------------------OUTILS---------------------------------------------*/
 	/** dis si les cellules sont voisines */
 	public boolean isVoisin(Cell source, Cell cible){

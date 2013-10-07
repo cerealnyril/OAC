@@ -87,4 +87,8 @@ public class Batiment extends EntiteStatic{
 		}
 		return tex;
 	}
+	
+	public int getType(){
+		return this.type;
+	}
 }

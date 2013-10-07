@@ -262,4 +262,16 @@ public class Paquet {
 	public int getNbTotal(){
 		return this.id_q;
 	}
+	public int getNext(){
+		return this.texY;
+	}
+	public int getIDQn(){
+		return this.texX;
+	}
+	public int getIDRail(){
+		return this.L;
+	}
+	public int getClos(){
+		return this.sens;
+	}
 }

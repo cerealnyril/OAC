@@ -139,7 +139,7 @@ public class Administration extends Bloc{
 		}
 		//extraction des adjacences
 		extractAdjacence();
-		mairie.updateFrontieres(this.non_contigue);
+		mairie.updateFrontieres(this.non_contigue, to_x);
 		mairie.updateRocades(this.contigue, to_x);
 	}
 	

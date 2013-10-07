@@ -75,7 +75,7 @@ public class ParamsGlobals {
 ////////////////////////////////////////////////////////////////////////////////
     public static int PERIODES = 3;
     public static int MINUTES = 10;
-    public static int HEURES = MINUTES*PERIODES;
+    public static int HEURES = 1;//MINUTES*PERIODES;
     public static int HEURES_PERIODES = PERIODES*PERIODES;
     public static int HEURES_JOUR = PERIODES*HEURES_PERIODES;
     public static int JOURNEE = HEURES_JOUR*HEURES;
