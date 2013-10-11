@@ -1,8 +1,15 @@
 package elements2D;
-/** Classe qui gère la construction d'un bord du monde a partir de toutes les frontieres */
+
+import com.badlogic.gdx.utils.ObjectMap;
+
+/** Classe qui gère les frontieres à la façon de ligne qui gère les rails */
 public class Bord {
 	
+	private ObjectMap<Integer, Frontiere> frontieres;
+	
 	public Bord(){
-		
+		this.frontieres = new ObjectMap<Integer, Frontiere>();
 	}
+	
+	
 }

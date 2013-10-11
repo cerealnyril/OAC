@@ -50,6 +50,7 @@ public class ParamsGlobals {
 ////////////////////////////////////////////////////////////////////////////////
     public static Ville VILLE;
     private static String base_fichier = "../city/fichiers/";
+    public static String FIC_CONTROLES = base_fichier+"controles.txt";
     public static String XML_COM_DATAS = base_fichier+"commerce.xml";
     public static String XML_JOB_DATAS = base_fichier+"metiers.xml";
     public static String XML_FACTIONS = base_fichier+"faction.xml";
@@ -61,7 +62,7 @@ public class ParamsGlobals {
     		MANAGER = manager;
     }
     // variables permettant l'initialisation 
-    public static int NB_QUARTIERS = 8;
+    public static int NB_QUARTIERS = 3;
     public static int BASE_POP = 400;
 
     public static int TAILLE_PLATEAU = 129;
@@ -75,7 +76,7 @@ public class ParamsGlobals {
 ////////////////////////////////////////////////////////////////////////////////
     public static int PERIODES = 3;
     public static int MINUTES = 10;
-    public static int HEURES = 1;//MINUTES*PERIODES;
+    public static int HEURES = MINUTES*PERIODES;
     public static int HEURES_PERIODES = PERIODES*PERIODES;
     public static int HEURES_JOUR = PERIODES*HEURES_PERIODES;
     public static int JOURNEE = HEURES_JOUR*HEURES;

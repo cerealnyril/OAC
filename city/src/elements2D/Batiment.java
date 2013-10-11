@@ -2,88 +2,89 @@ package elements2D;
 
 import tools.Identifiants;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Batiment extends EntiteStatic{
-	private float x, y, z;
-	private int l, L;
-	private Sprite sprite;
-	private float milieu_x, milieu_y;
 	
 	/** position du batiment qui prend un vecteur de position et une taille */
-	public Batiment(int id, Vector2 position, float width, float height, int type, int sens, int id_q) {
+	public Batiment(int id, Vector2 position, float width, float height, int type, int id_q) {
 		super(id, position, width, height, type, id_q);
 		super.tex = selectTexture(type);
 	}
 	
-	private Texture selectTexture(int type){
-		Texture tex = TexRefs.batTex;
+	private TextureRegion selectTexture(int type){
+		TextureRegion tex = null;
 		//habitation
 		if(type == Identifiants.immeubleBat){
-			tex = TexRefs.immeubleTex;
+			tex = AssetsLoader.immeuble;
 		}
 		//commerce
 		else if(type == Identifiants.magasinBat){
-			tex = TexRefs.magasinTex;
+			tex = AssetsLoader.magasin;
 		}
 		//production
 		else if(type == Identifiants.usineBat){
-			tex = TexRefs.usineTex;
+			tex = AssetsLoader.usine;
 		}
 		else if(type == Identifiants.fermeBat){
-			tex = TexRefs.fermeTex;
+			tex = AssetsLoader.ferme;
 		}
 		else if(type == Identifiants.centraleBat){
-			tex = TexRefs.centraleTex;
+			tex = AssetsLoader.centrale;
 		}
 		//decoration
 		else if(type == Identifiants.treeBat){
-			tex = TexRefs.treeTex;
+			tex = AssetsLoader.tree;
 		}
 		else if(type == Identifiants.parcBat){
-			tex = TexRefs.parcTex;
+			tex = AssetsLoader.parc;
+		}
+		else if(type == Identifiants.statueBat){
+			tex = AssetsLoader.statue;
+		}
+		else if(type == Identifiants.placeBat){
+			tex = AssetsLoader.place;
 		}
 		//administratif
 		else if(type == Identifiants.banqueBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.banque;
 		}
 		else if(type == Identifiants.commissariatBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.commissariat;
 		}
 		else if(type == Identifiants.ecoleBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.ecole;
 		}
 		else if(type == Identifiants.horlogeBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.horloge;
 		}
 		else if(type == Identifiants.interimBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.interim;
 		}
 		else if(type == Identifiants.mairieBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.mairie;
 		}
 		else if(type == Identifiants.morgueBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.morgue;
 		}
 		else if(type == Identifiants.pensionnatBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.pensionnat;
 		}
 		else if(type == Identifiants.sanitariumBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.sanitarium;
 		}
 		else if(type == Identifiants.staseBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.stase;
 		}
 		else if(type == Identifiants.tribunalBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.tribunal;
 		}
 		else if(type == Identifiants.refugeBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.refuge;
 		}
 		else if(type == Identifiants.stationBat){
-			tex = TexRefs.batAdminTex;
+			tex = AssetsLoader.station;
 		}
 		return tex;
 	}

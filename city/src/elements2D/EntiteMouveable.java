@@ -7,11 +7,9 @@ public abstract class EntiteMouveable extends Entite{
 	
 	protected Vector2 velocite;
 	protected float speed;
-	protected float rotation;
 
 	public EntiteMouveable(int id, Vector2 velocite, float speed, float rotation, float width, float height, int id_q) {
 		super(id, velocite, width, height, id_q);
-		this.rotation = rotation;
 		this.speed = speed;
 		this.velocite = new Vector2(0, 0);
 	}
@@ -22,14 +20,6 @@ public abstract class EntiteMouveable extends Entite{
 	
 	public void setVelocite(Vector2 velocite) {
 		this.velocite = velocite;
-	}
-	
-	public float getRotation() {
-		return rotation;
-	}
-
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
 	}
 	
 	public abstract void update();

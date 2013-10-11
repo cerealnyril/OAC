@@ -17,7 +17,6 @@ public class Mairie extends Batiment{
 	private ArrayList<Rocade> rocades;
 	private ArrayList<Frontiere> frontieres;
 	private int jour;
-	private boolean init;
 	private boolean haut, bas, gauche, droite;
 /*-----------------------------INITIALISATION------------------------*/
 	public Mairie(int id_b, int id_q) {
@@ -27,7 +26,6 @@ public class Mairie extends Batiment{
 		rocades = new ArrayList<Rocade>();
 		frontieres = new ArrayList<Frontiere>();
 		this.jour = 0;
-		this.init = true;
 	}
 	private void setTaille(){
 		super.profondeur = 2;
@@ -72,7 +70,6 @@ public class Mairie extends Batiment{
 		//test si il n'existe pas de cellules non contigue alors il n'y aura pas de frontiere
 		if(non_contigue.size() > 0){	
 			setFrontieres(non_contigue, to_x);
-			init = false;
 		}
 	}
 /*-----------------------PARTIE GESTION DES FRONTIERES DU QUARTIER------------------*/
@@ -97,7 +94,7 @@ public class Mairie extends Batiment{
 			else{
 				if(tmp.size() > 0){
 					boolean clos = false;
-					if(on_x && (to_x > to_y)){
+					if((on_x && (to_x > to_y)) || (!on_x && (to_x < to_y))){
 						clos = true;
 					}
 					Frontiere frontiere = new Frontiere(tmp, to_y, to_x, this.id_quartier, this.jour, clos);
@@ -112,7 +109,7 @@ public class Mairie extends Batiment{
 		}
 		if(tmp.size() > 0){
 			boolean clos = false;
-			if(on_x && (to_x > to_y)){
+			if((on_x && (to_x > to_y)) || (!on_x && (to_x < to_y))){
 				clos = true;
 			}
 			Frontiere frontiere = new Frontiere(tmp, to_y, to_x, this.id_quartier, this.jour, clos);

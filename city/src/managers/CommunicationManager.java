@@ -118,39 +118,39 @@ public class CommunicationManager {
 		Thread r = new Thread() {
 		   	public void run() {
 		   			//on prepare tout ça pour avoir une idée de combien on en envois
-		   			ArrayList<Quartier> quartiers = ParamsGlobals.VILLE.getAllQuartiers();
-		   			ArrayList<Bloc> blocs = ParamsGlobals.VILLE.getAllBlocs();
-		   			ArrayList<Batiment> bats = ParamsGlobals.VILLE.getAllBats();
-		   			ArrayList<Cell> routes = ParamsGlobals.VILLE.getAllRoutes();
-		   			ArrayList<Cell> canaux = ParamsGlobals.VILLE.getAllCanaux();
-		   			ArrayList<RLE> rles = ParamsGlobals.VILLE.getAllRLEs();
-		   			ArrayList<Rail> rails = ParamsGlobals.VILLE.getAllRails();
-		   			int total = quartiers.size()+blocs.size()+bats.size()+routes.size()+canaux.size()+rles.size()+rails.size();
+		   			ArrayList<Quartier> quartiers_full = ParamsGlobals.VILLE.getAllQuartiers();
+		   			ArrayList<Bloc> blocs_full = ParamsGlobals.VILLE.getAllBlocs();
+		   			ArrayList<Batiment> bats_full = ParamsGlobals.VILLE.getAllBats();
+		   			ArrayList<Cell> routes_full = ParamsGlobals.VILLE.getAllRoutes();
+		   			ArrayList<Cell> canaux_full = ParamsGlobals.VILLE.getAllCanaux();
+		   			ArrayList<RLE> rles_full = ParamsGlobals.VILLE.getAllRLEs();
+		   			ArrayList<Rail> rails_full = ParamsGlobals.VILLE.getAllRails();
+		   			int total = quartiers_full.size()+blocs_full.size()+bats_full.size()+routes_full.size()+canaux_full.size()+rles_full.size()+rails_full.size();
 		   			
 		   			//le premier message pour annoncer combien j'en envois
 		   			Message msg = new Message(idClient, getVillePack(total), port, ia);
 		   			serveur.send(msg);
 		   			//les vrais envois par type
 		   			//les quartiers 
-		   			Iterator<Quartier> iter_quart = quartiers.iterator();
+		   			Iterator<Quartier> iter_quart = quartiers_full.iterator();
 					while(iter_quart.hasNext()){
 						msg = new Message(idClient, getQuartPack(iter_quart.next()), port, ia);
 						serveur.send(msg);
 					}
 					//les blocs
-			   		Iterator<Bloc> iter_bloc = blocs.iterator();
+			   		Iterator<Bloc> iter_bloc = blocs_full.iterator();
 					while(iter_bloc.hasNext()){
 						msg = new Message(idClient, getBlocPack(iter_bloc.next()), port, ia);
 						serveur.send(msg);
 					}
 					//les batiments
-			   		Iterator<Batiment> iter_bat = bats.iterator();
+			   		Iterator<Batiment> iter_bat = bats_full.iterator();
 					while(iter_bat.hasNext()){
 						msg = new Message(idClient, getBatPack(iter_bat.next()), port, ia);
 						serveur.send(msg);
 					}
 					//les cellules de route
-					Iterator<Cell> iter_routes = routes.iterator();
+					Iterator<Cell> iter_routes = routes_full.iterator();
 					while(iter_routes.hasNext()){
 						Cell route = iter_routes.next();
 						msg = new Message(idClient, getCellPack(route, route.getIDQuartier()), port, ia);
@@ -163,20 +163,20 @@ public class CommunicationManager {
 						serveur.send(msg);
 					}*/
 					//les cellules de canaux
-					Iterator<Cell> iter_canaux = canaux.iterator();
+					Iterator<Cell> iter_canaux = canaux_full.iterator();
 					while(iter_canaux.hasNext()){
 						Cell canal = iter_canaux.next();
 						msg = new Message(idClient, getCellPack(canal, canal.getIDQuartier()), port, ia);
 						serveur.send(msg);
 					}
 					//les rle : frontieres, rocades
-					Iterator<RLE> iter_rle = rles.iterator();
+					Iterator<RLE> iter_rle = rles_full.iterator();
 					while(iter_rle.hasNext()){
 						msg = new Message(idClient, getRLEPack(iter_rle.next()), port, ia);
 						serveur.send(msg);
 					}
 					//les rails
-					Iterator<Rail> iter_rail = rails.iterator();
+					Iterator<Rail> iter_rail = rails_full.iterator();
 					while(iter_rail.hasNext()){
 						msg = new Message(idClient, getRailPack(iter_rail.next()), port, ia);
 						serveur.send(msg);

@@ -1,6 +1,6 @@
 package elements2D;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Rail extends EntiteStatic{
@@ -8,13 +8,16 @@ public class Rail extends EntiteStatic{
 	
 	public Rail(Vector2 position, float width, float height) {
 		super(0, position, width, height, -1, 0);
-		super.tex = selectTexture();
+		int type = 0;
+		super.tex = selectTexture(type);
+//		super.createSprite();
 	}
-	private Texture selectTexture(){
-		Texture res = TexRefs.rail1Tex;
+	private TextureRegion selectTexture(int type){
+		TextureRegion res = AssetsLoader.rail_I;
 		if(width > height){
-			res = TexRefs.rail2Tex;
+			res = AssetsLoader.rail_I;
 		}
+		//vas falloir faire le test avec le type
 		return res;
 	}
 }

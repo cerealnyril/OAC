@@ -1,0 +1,6 @@
+1-haut.54
+2-bas.57
+3-gauche.45
+4-droite.32
+5-Rotation horaire.33
+6-Rotation Naturelle.29

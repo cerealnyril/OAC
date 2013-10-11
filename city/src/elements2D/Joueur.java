@@ -2,11 +2,7 @@ package elements2D;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Joueur extends EntiteMouveable{
 	
@@ -16,8 +12,7 @@ public class Joueur extends EntiteMouveable{
 			float height, int id_q) {
 		super(id, velocite, speed, rotation, width, height, id_q);
 		//mise en place des textures 
-		super.tex = TexRefs.joueurTex;
-		super.tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		super.tex = AssetsLoader.joueur;
 	}
 	
 	@Override
@@ -28,6 +23,8 @@ public class Joueur extends EntiteMouveable{
 		}
 		bounds.x = position.x;
 		bounds.y = position.y;
+		getImg().setPosition(position.x, position.y);
+		getImg().setRotation(rotation);
 	}
 
 	/** Donne l'instance de la camera au joueur pour les zoom ou les changements d'orientation */

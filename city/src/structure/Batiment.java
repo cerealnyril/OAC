@@ -18,11 +18,9 @@ public abstract class Batiment{
 	//variables de cartographie 
 	protected Zone zone;
 	protected int id_bloc, id_quartier;
-//	protected TreeMap<Integer, String> models;
 	protected int lvl;
 	
 	public Batiment(int id, int id_q){
-//		this.models = new TreeMap<Integer, String>();
 		this.id_bloc = id;
 		this.id_quartier = id_q;
 		this.frais = 0.0;

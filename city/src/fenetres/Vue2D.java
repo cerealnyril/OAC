@@ -43,19 +43,14 @@ public class Vue2D  implements Screen{
 			renderVille.render();
 			//on choppe le nombre de models a charger dans la ville
 		}
-		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -65,19 +60,16 @@ public class Vue2D  implements Screen{
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void dispose() {
 		ville.dispose();
+		renderVille.dispose();
 	}
 
 }

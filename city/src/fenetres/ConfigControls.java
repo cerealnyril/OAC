@@ -7,6 +7,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import controles.ControlModel;
+
 public class ConfigControls implements Screen{
 
 	private final ScreenManager jeu;
@@ -15,6 +17,7 @@ public class ConfigControls implements Screen{
 	public ConfigControls(ScreenManager jeu) {
 		this.jeu = jeu;
 		Gdx.gl.glClearColor(0, 0, 0, 1);
+		ControlModel controls = new ControlModel();
 	}
 
 	@Override
