@@ -11,5 +11,7 @@ public class Bord {
 		this.frontieres = new ObjectMap<Integer, Frontiere>();
 	}
 	
-	
+	public void upFrontiere(Frontiere frontiere){
+		
+	}
 }

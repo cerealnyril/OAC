@@ -1650,11 +1650,10 @@ public class Quartier {
 	public void initZone(int x, int y, int lim_x, int lim_y){
 		//initialisation de la zone
 		zone.setCentre(x, y);
-		zone.setTailleX(lim_x);
-		zone.setTailleY(lim_y);
+		zone.setTailleX(lim_x+2);
+		zone.setTailleY(lim_y+2);
 		zone.initLimit();
 		zone.refreshTaille();
-//		setLinkedStructures();
 	}
 	/** initialisation du relief */
 	public void setRelief(){
@@ -1695,6 +1694,7 @@ public class Quartier {
 				}
 			}
 //			System.out.println("croissance x "+this.croissance.axeX());
+//			System.out.println("voisins h"+voisin_haut+" b "+this.voisin_bas+", g "+this.voisin_gauche+", d "+this.voisin_droite);
 			admin.updateLinkedStructures(this.croissance.axeX());
 		}
 	}
@@ -1704,67 +1704,75 @@ public class Quartier {
 		if(this.voisin_haut != null){
 			ArrayList<Cell> cellules = new ArrayList<Cell>();
 			//cellule 1
-			cellules.add(voisin_haut.getZone().getCell(
-					zone.getStartX(),
-					voisin_haut.getZone().getStartY()));
+			cellules.add(voisin_haut.getZone().getCellRelief(
+					zone.getStartX()+1,
+					zone.getEndY()
+					));
 			//cellule 2
-			cellules.add(voisin_haut.getZone().getCell(
-					Utils.doubleToInt(zone.getCentreX()),
-					voisin_haut.getZone().getStartY()));
+			cellules.add(voisin_haut.getZone().getCellRelief(
+					Utils.floatToInt(zone.getCentreX()),
+					zone.getEndY()
+					));
 			//cellule 3
-			cellules.add(voisin_haut.getZone().getCell(
+			cellules.add(voisin_haut.getZone().getCellRelief(
 					zone.getEndX()-1,
-					voisin_haut.getZone().getStartY()));
+					zone.getEndY()
+					));
 			result.put(this.voisin_haut.getID(), cellules);
 		}
 		if(this.voisin_bas != null){
 			ArrayList<Cell> cellules = new ArrayList<Cell>();
 			//cellule 1
-			cellules.add(voisin_bas.getZone().getCell(
-					voisin_bas.getZone().getStartX(), 
-					voisin_bas.getZone().getEndY()-1));
+			cellules.add(voisin_bas.getZone().getCellRelief(
+					zone.getStartX()+1,
+					zone.getStartY()
+					));
 			//cellule 2
-			cellules.add(voisin_bas.getZone().getCell(
-					Utils.doubleToInt(voisin_bas.getZone().getCentreX()), 
-					voisin_bas.getZone().getEndY()-1));
+			cellules.add(voisin_bas.getZone().getCellRelief(
+					Utils.floatToInt(zone.getCentreX()),
+					zone.getStartY()
+					));
 			//cellule 3
-			cellules.add(voisin_bas.getZone().getCell(
-					voisin_bas.getZone().getEndX()-1,
-					voisin_bas.getZone().getEndY()-1));
+			cellules.add(voisin_bas.getZone().getCellRelief(
+					zone.getEndX()-1,
+					zone.getStartY()
+					));
 			result.put(this.voisin_bas.getID(), cellules);
 		}
 		if(this.voisin_droite != null){
 			ArrayList<Cell> cellules = new ArrayList<Cell>();
 			//cellule 1
-			cellules.add(voisin_droite.getZone().getCell(
-					voisin_droite.getZone().getStartX(), 
-					voisin_droite.getZone().getStartY()));
+			cellules.add(voisin_droite.getZone().getCellRelief(
+					zone.getEndX(), 
+					zone.getStartY()+1));
 			//cellule 2
-			cellules.add(voisin_droite.getZone().getCell(
-					voisin_droite.getZone().getStartX(), 
-					Utils.doubleToInt(voisin_droite.getZone().getCentreY())));
+			cellules.add(voisin_droite.getZone().getCellRelief(
+					zone.getEndX(), 
+					Utils.doubleToInt(zone.getCentreY())));
 			//cellule 3
-			cellules.add(voisin_droite.getZone().getCell(
-					voisin_droite.getZone().getStartX(), 
-					voisin_droite.getZone().getEndY()-1));
+			cellules.add(voisin_droite.getZone().getCellRelief(
+					zone.getEndX(), 
+					zone.getEndY()-1));
+			
 			result.put(this.voisin_droite.getID(), cellules);
 		}
 		if(this.voisin_gauche != null){
 			ArrayList<Cell> cellules = new ArrayList<Cell>();
 			//cellule 1
-			cellules.add(voisin_gauche.getZone().getCell(
-					voisin_gauche.getZone().getEndX()-1, 
-					voisin_gauche.getZone().getStartY()));
+			cellules.add(voisin_gauche.getZone().getCellRelief(
+					zone.getStartX(), 
+					zone.getStartY()+1));
 			//cellule 2
-			cellules.add(voisin_gauche.getZone().getCell(
-					voisin_gauche.getZone().getEndX()-1,
-					Utils.doubleToInt(voisin_gauche.getZone().getCentreY())));
+			cellules.add(voisin_gauche.getZone().getCellRelief(
+					zone.getStartX(),
+					Utils.floatToInt(zone.getCentreY())));
 			//cellule 3
-			cellules.add(voisin_gauche.getZone().getCell(
-					voisin_gauche.getZone().getEndX()-1,
-					voisin_gauche.getZone().getEndY()-1));
+			cellules.add(voisin_gauche.getZone().getCellRelief(
+					zone.getStartX(),
+					zone.getEndY()-1));
 			result.put(this.voisin_gauche.getID(), cellules);
 		}
+//		System.out.println("transmission "+result);
 		return result;
 	}
 	/** renvois toutes les cellules de chaque quartier voisin pour permettre que la heightmap soit homogène */

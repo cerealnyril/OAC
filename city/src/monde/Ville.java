@@ -245,6 +245,7 @@ public class Ville {
 		}
 		Croissance croissance = new Croissance(current_x, current_y);	
 		quartier.setCroissance(croissance);
+		//le centre et la taille
 		quartier.initZone(current_x*limit, current_y*limit, limit, limit);
 		incrementPos();
 		ParamsGlobals.MANAGER.updateObject(quartier);
@@ -272,6 +273,7 @@ public class Ville {
 			public void run() { 
 				periodeTemps();
 				heure++;
+				ParamsGlobals.MANAGER.executeTime(heure);
 				System.out.println(heure+" "+ville.getAge());
 			}
 		};
@@ -279,7 +281,8 @@ public class Ville {
 	}
 
 	public void periodeTemps(){
-            if(heure <= 9){
+		
+        if(heure <= 9){
 			Logger.getLogger(Ville.class.getName()).log(Level.INFO, heure+" du jour");
 		}
 		else if(heure <= 18){
@@ -354,16 +357,12 @@ public class Ville {
 			Quartier gauche = listeQuartiers.get(id_gauche);
 			taille_x = 
 					Math.abs(gauche.getZone().getStartX())+Math.abs(droite.getZone().getEndX());
-//					(int) (Math.abs(gauche.getCentreX()-Utils.moitiePos(gauche.getTailleX()))+
-//					Math.abs(droite.getCentreX()+Utils.moitiePos(droite.getTailleX())));
 		}
 		if(id_haut != -1 && id_bas != -1){
 			Quartier haut = listeQuartiers.get(id_haut);
 			Quartier bas = listeQuartiers.get(id_bas);
 			taille_y = 
 					Math.abs(bas.getZone().getStartY())+Math.abs(haut.getZone().getEndY());
-//					(int) (Math.abs(bas.getCentreY()-Utils.moitiePos(bas.getTailleY()))+
-//					Math.abs(haut.getCentreY()+Utils.moitiePos(haut.getTailleY())));
 		}
 		//on prend la plus grande
 		result = taille_y;
@@ -393,7 +392,7 @@ public class Ville {
 			TreeMap<Integer, Quartier> all_quart = new TreeMap<Integer, Quartier>();
 			all_quart.put(citadelle.getID(), citadelle);
 			all_quart.putAll(listeQuartiers);
-			Iterator<Integer> iter_test = /*listeQuartiers*/all_quart.keySet().iterator();
+			Iterator<Integer> iter_test = all_quart.keySet().iterator();
 			while(iter_test.hasNext()){
 				int clef = iter_test.next();
 				if(clef != key){
@@ -406,38 +405,30 @@ public class Ville {
 					//voisin de gauche et de droite
 					if((min_y == test_min_y) && (max_y == test_max_y)){
 						//gauche
-						if(min_x == test_max_x){
+						if(min_x+1 == test_max_x-1){
 							quartier.getCroissance().setGauche(clef);
-//							if(test.getID() != -1){
-								quartier.setVoisinGauche(test);
-//							}
+							quartier.setVoisinGauche(test);
 //							System.out.println("quartier "+quartier.getID()+" voisin gauche "+test.getID());
 						}
 						//droite
-						else if(max_x == test_min_x){
+						else if(max_x-1 == test_min_x+1){
 							quartier.getCroissance().setDroite(clef);
-//							if(test.getID() != -1){
-								quartier.setVoisinDroite(test);
-//							}
+							quartier.setVoisinDroite(test);
 //							System.out.println("quartier "+quartier.getID()+" voisin droite "+test.getID());
 						}
 					}
 					//voisin du haut et du bas
 					if((min_x == test_min_x) && (max_x == test_max_x)){
 						//haut
-						if(max_y == test_min_y){
+						if(max_y-1 == test_min_y+1){
 							quartier.getCroissance().setHaut(clef);
-//							if(test.getID() != -1){
-								quartier.setVoisinHaut(test);
-//							}
+							quartier.setVoisinHaut(test);
 //							System.out.println("quartier "+quartier.getID()+" voisin haut "+test.getID());
 						}
 						//bas
-						if(min_y == test_max_y){
+						if(min_y+1 == test_max_y-1){
 							quartier.getCroissance().setBas(clef);
-//							if(test.getID() != -1){
-								quartier.setVoisinBas(test);
-//							}
+							quartier.setVoisinBas(test);
 //							System.out.println("quartier "+quartier.getID()+" voisin bas "+test.getID());
 						}
 					}

@@ -15,6 +15,7 @@ public class RLE {
 	protected ArrayList<Cell> cells;
 	protected float start_x, start_y;
 	protected int jour;
+	protected int orientation;
 	
 	public RLE(ArrayList<Cell> cells, int x, int y, int id_q, int jour){
 		this.cells = new ArrayList<Cell>();
@@ -29,6 +30,17 @@ public class RLE {
 		this.tailleX = x;
 		this.tailleY = y;
 		this.id_quartier = id_q;
+		this.orientation = -1;
+	}
+	
+	public RLE(Cell cell, int id_q, int jour, int orientation){
+		this.cells = new ArrayList<Cell>();
+		this.cells.add(cell);
+		this.jour = jour;
+		this.tailleX = 1;
+		this.tailleY = 1;
+		this.id_quartier = id_q;
+		this.orientation = orientation;
 	}
 /*-------------------------ACCESSEURS-------------------------*/	
 	public int getType(){
@@ -68,6 +80,9 @@ public class RLE {
 	}
 	public int getJour(){
 		return this.jour;
+	}
+	public int getOrientation(){
+		return this.orientation;
 	}
 /*---------------------------------SETTEURS------------------------------*/	
 	/** fonction de la classe abstraite qui vas mettre tout les bon types et extraire les points de depars et les centres */

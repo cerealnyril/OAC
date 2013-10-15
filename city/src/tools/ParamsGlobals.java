@@ -62,14 +62,14 @@ public class ParamsGlobals {
     		MANAGER = manager;
     }
     // variables permettant l'initialisation 
-    public static int NB_QUARTIERS = 3;
+    public static int NB_QUARTIERS = 1;
     public static int BASE_POP = 400;
 
     public static int TAILLE_PLATEAU = 129;
     public static int GAP = 40;
     public static int HEIGHT = 10;
     //pourcentage d'elevation du canal
-    public static double LVL_CANAUX = 0.5;
+    public static double LVL_CANAUX = 0.0;
     public static int MULT_TAILLE = 2;
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////PARAMETRES TEMPORELS///////////////////////////////

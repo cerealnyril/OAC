@@ -1,6 +1,6 @@
 package elements2D;
 
-import com.badlogic.gdx.graphics.Texture;
+//import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -72,12 +72,24 @@ public abstract class Entite {
 		if(this.img == null){
 			img = new Image(tex);
 			img.setSize(width, height);
-			img.setOrigin((width/2), (this.height/2));
+			//img.scale(scale);
+			img.setOrigin(((width)/2), ((height)/2));
 			img.setPosition(position.x, position.y);
 			img.setRotation(this.rotation);
 		}
 		return this.img;
 	}
+	/** Renvois un Sprite */
+/*	public Sprite getSprite(){
+		if(this.sprite == null){
+			sprite = new Sprite(tex);
+			sprite.setSize(width, height);
+			sprite.setOrigin(((width)/2), ((height)/2));
+			sprite.setPosition(position.x, position.y);
+			sprite.setRotation(this.rotation);
+		}
+		return this.sprite;
+	}*/
 /*------------------------------SETTEURS-------------------------------*/
 	/** Positionne a partir d'un vecteur et met à jour les limites */
 	public void setPosition(Vector2 position) {
@@ -85,6 +97,7 @@ public abstract class Entite {
 		this.bounds.y = position.y;
 		this.position = position;
 		getImg().setPosition(position.x, position.y);
+//		getSprite().setPosition(position.x, position.y);
 	}
 	
 	/** Renseigne la longueure */
@@ -108,5 +121,6 @@ public abstract class Entite {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 		getImg().setRotation(rotation);
+//		getSprite().setRotation(rotation);
 	}
 }

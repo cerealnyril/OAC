@@ -1,12 +1,9 @@
 package com.essai.gdx;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import managers.MetaManager;
 import managers.ScreenManager;
-
-import tools.ParamsGlobals;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -23,7 +20,7 @@ public class Main {
          
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "city";
-		cfg.useGL20 = false;
+		cfg.useGL20 = true;
 		cfg.width = 1024;
 		cfg.height = 512;
 		boolean mode = false;

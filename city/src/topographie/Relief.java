@@ -306,7 +306,7 @@ public class Relief {
 		int end_y = zone_courante.getEndY();
 		for(int y = start_y; y < end_y; y++){
 	    	for(int x = start_x; x < end_x; x++){
-	    		if(x == start_x || x == (end_x-1) || y == start_y || y == (end_y-1)){
+	    		if(x == (start_x+1) || x == (end_x-1) || y == (start_y+1) || y == (end_y-1)){
 	    			Cell cell = getCell(x, y);
 	    			if(cell == null){
 	    				cell = new Cell(x, y);

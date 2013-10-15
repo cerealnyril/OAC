@@ -139,6 +139,7 @@ public class Administration extends Bloc{
 		}
 		//extraction des adjacences
 		extractAdjacence();
+//		System.out.println("Quartiers h "+this.quartier_haut+", b"+this.quartier_bas+", g"+this.quartier_gauche+", d "+this.quartier_droite);
 		mairie.updateFrontieres(this.non_contigue, to_x);
 		mairie.updateRocades(this.contigue, to_x);
 	}
@@ -267,17 +268,18 @@ public class Administration extends Bloc{
 						non_contigue.add(cell);
 					}
 				}
-				//non_contigue.add(cell);
 			}
 			next = false;
 		}
+//		System.out.println("contigues "+contigue.size());
+//		System.out.println("non contigues "+non_contigue.size());
 	}
 	/** test si les cellules sont voisines */
 	private boolean isVoisin(Cell cell, Cell voisin){
-		if(cell.getX() == voisin.getX() && (cell.getY() == voisin.getY()+1 || cell.getY() == voisin.getY()-1 || cell.getY() == voisin.getY())){
+		if(cell.getX() == voisin.getX() && (cell.getY() == voisin.getY() || cell.getY() == voisin.getY()-1 || cell.getY() == voisin.getY()+1)){
 			return true;
 		}
-		else if(cell.getY() == voisin.getY() && (cell.getX() == voisin.getX()+1 || cell.getX() == voisin.getX()-1 || cell.getX() == voisin.getX())){
+		else if(cell.getY() == voisin.getY() && (cell.getX() == voisin.getX() || cell.getX() == voisin.getX() -1 || cell.getX() == voisin.getX() +1)){
 			return true;
 		}
 		return false;

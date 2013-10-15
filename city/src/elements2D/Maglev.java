@@ -12,11 +12,12 @@ public class Maglev extends EntiteMouveable{
 	private Ligne ligne;
 	private int location;
 	private int id_q_aim = 105;
+	private static float SPEED = 2f;
 	private Array<Vector2> chemin;
 	
-	public Maglev(int id, Vector2 velocite, float speed, float rotation,
+	public Maglev(int id, Vector2 velocite, float rotation,
 			float width, float height, int id_q, Ligne ligne) {
-		super(id, velocite, speed, rotation, width, height, id_q);
+		super(id, velocite, SPEED, rotation, width, height, id_q);
 		this.ligne = ligne;
 		super.tex = AssetsLoader.maglev;
 		this.location = -1;
@@ -68,8 +69,9 @@ public class Maglev extends EntiteMouveable{
 	}
 	/** Indique si le point intermediaire est atteind afin de se deplacer le long du rail vers le point suivant */
 	private boolean isReached(){
-		float on_x = chemin.get(location).x - super.getX();
-		float on_y = chemin.get(location).y - super.getY();
+		float on_x = Math.abs(chemin.get(location).x - super.getX());
+		float on_y = Math.abs(chemin.get(location).y - super.getY());
+//		System.out.println("on "+on_x+", "+on_y);
 		if((on_x <= 0.2f) && (on_y <= 0.2f)){
 			return true;
 		}

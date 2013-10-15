@@ -12,5 +12,10 @@ public class Rocade extends RLE{
 		super.type = Identifiants.roadBloc;
 		super.setCells();
 	}
+	public Rocade(Cell cell, int id_q, int jour, int type) {
+		super(cell, id_q, jour, type);
+		super.type = Identifiants.roadBloc;
+		super.setCells();
+	}
 
 }

@@ -3,47 +3,56 @@ package elements2D;
 import reseau.Paquet;
 import tools.Identifiants;
 import layers2D.Air;
-import layers2D.Circadien;
+import layers2D.Ciel;
 import layers2D.Tangible;
 import layers2D.Sol;
+import lights.RayHandler;
 import managers.ScreenManager;
+import menus.Metro;
+
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /** Classe qui contient les fonctions logiques de la ville */
 public class Ville {
 	
 	private Joueur joueur;
-//	private int jour;
 	private int nb_current, nb_aim;
 
 	private Sol sol;
 	private Air air;
 	private Tangible tangible;
-	private Circadien circadien;
+	private Ciel ciel;
 	
+	//pour les lumieres
+	private World world;
+	private RayHandler handler;
 	
 	private Controles controles;
 	
 	public Ville(ScreenManager jeu){
+		
 		this.joueur = new Joueur(-1, new Vector2(0, 0), 5f, 0, 0.20f, 0.20f, 0);
 		this.controles = new Controles(this);
-		Gdx.input.setInputProcessor(controles);	
-//		this.jour = 0;
+		Gdx.input.setInputProcessor(controles);
+		//sert pour la fenetre de chargement
 		this.nb_current = 0;
 		this.nb_aim = -1;
-		
-		//chargement des assets
-		AssetsLoader.load();
 		
 		//Création des différents groupes de niveaux
 		this.sol = new Sol();
 		this.tangible = new Tangible();
 		this.air = new Air();
-		this.circadien = new Circadien();
+		this.ciel = new Ciel();
+		
+		//pour les lumières 
+		world = new World(new Vector2(0, -9.8f), false);
+		handler = new RayHandler(world);
+		handler.useDiffuseLight(true);
+	    handler.setAmbientLight(1f, 0f, 0f,1.0f);
 	}
 	
 	public void update(){
@@ -76,12 +85,17 @@ public class Ville {
 		}
 		joueur.update();
 		air.update();
+		//changement de limiere
+		handler.setAmbientLight(ciel.getAmbiantLight());
 	}
 	
 	public void dispose(){
-		AssetsLoader.dispose();
 	}
 /*--------------------------------------ACCESSEURS-------------------------------------*/	
+	/** Renvois le monde qui permet d'afficher des objets avec de la physique */
+	public World getWorld(){
+		return this.world;
+	}
 	/** Renvois la quantité de model qui est à charger que le client dis */
 	public float getNbAim(){
 		return (float) this.nb_aim;
@@ -94,34 +108,47 @@ public class Ville {
 	
 	/** Renvois le groupe qui contient les éléments au sol */
 	public Group getSol(){
-		return sol.getSol();
+		return sol;
 	}
 	
 	/** Renvois le groupe qui contient les éléments aeriens*/
 	public Group getAir(){
-		return air.getAir();
+		return air;
 	}
 	
 	/** Renvois le groupe qui contient les éléments circadients en gros l'eclairage en fonction du jour */
-	public Group getCircadien(){
-		return this.circadien;
+	public Ciel getCiel(){
+		return this.ciel;
 	}
 	
 	/** Renvois le groupe qui contient les éléments tangibles avec lequels on peut interagir */
 	public Group getTangible(){
-		return tangible.getTangible();
+		return tangible;
 	}
 	
 	/** Renvois le joueur courant sur le plateau */
 	public Joueur getJoueur(){
 		return this.joueur;
 	}
-	
+	/** Renvois le gestionnaire de lumiere */
+	public RayHandler getLightHandler(){
+		return this.handler;
+	}
 /*--------------------------ARRIVEE DE NOUVEAUX OBJETS OU UPDATES-----------------------*/	
+	/** Gere l'arrivée de paquets d'infos de la ville (comme les changements d'heures) */
+	private void upInfosVille(int nb_aim, int heure, float minutesScale, float heureScale, float periodeScale){
+		if(nb_aim > 0){
+			this.nb_aim = nb_aim;
+		}
+		this.ciel.setTimeScales(minutesScale, heureScale, periodeScale);
+		this.ciel.upHeure(heure);
+	}
 	/** Gère l'arrive de nouveaux batiments */
 	private void upBatiment(Batiment bat){
 		if(tangible.upBatiment(bat)){
 			air.upStation(bat);
+			Metro metro = new Metro(bat.getID_q());
+			tangible.addActor(metro.getUI());
 		}
 	}
 	/** Gére l'arrivée de nouveaux blocs*/
@@ -146,7 +173,6 @@ public class Ville {
 	}
 	/** S'occupe de modifier les points de jonction de la ligne*/
 	private void upLigne(int id, float x, float y, int jour, int id_q, int next, int id_quart_next){
-		//ligne.update(id, x, y, jour, id_q, next, id_quart_next);
 		air.upPoint(id, x, y, jour, id_q, next, id_quart_next);
 	}
 	
@@ -196,12 +222,17 @@ public class Ville {
 				upFrontiere(new Frontiere(new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getId_q(), pack.getJour(), pack.getClos()));
 			}
 			else if(pack.getType() == Identifiants.roadBloc){
-				upRocade(new Rocade(new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getId_q(), pack.getJour()));
+				Rocade rocade = new Rocade(new Vector2(pack.getX(), pack.getY()), pack.getL(), pack.getl(), pack.getType(), pack.getId_q(), pack.getJour(), pack.getOrientation());
+				if(pack.getOrientation() != -1){
+					rocade.setRotation(pack.getOrientation()*90);
+				}
+				upRocade(rocade);
 			}
 		}
 		//pour les information sur la ville
 		else if(pack.getClasse() == 5){
-			this.nb_aim = pack.getNbTotal();
+			nb_current--;
+			upInfosVille(pack.getNbTotal(), pack.getHeure(), pack.getMinuteScale(), pack.getHeureScale(), pack.getHeurePeriode());
 		}
 		//pour les information sur le quartier
 		else if(pack.getClasse() == 6){

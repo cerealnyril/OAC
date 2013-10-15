@@ -160,8 +160,8 @@ public class Mairie extends Batiment{
 					}
 				}
 			}
-			//creation des rails
-			//hg
+			//creation des rocades
+			//hg = vas du coté haut gauche vers le milieu de la gauche 
 			if((gauche) && (step_hg != null) && (trap.getHG() != null)){
 				ArrayList<Cell> path_1 = zone_quartier.getCellLine(trap.getHG(), step_hg);
 				Rocade ins1 = new Rocade(path_1, path_1.size(), 1, this.id_quartier, jour);
@@ -170,8 +170,10 @@ public class Mairie extends Batiment{
 				ArrayList<Cell> path_2 = zone_quartier.getCellLine(step_hg, close);
 				Rocade ins2 = new Rocade(path_2, 1, path_2.size(), this.id_quartier, jour);
 				rocades.add(ins2);
+				Rocade ins3 = new Rocade(step_hg, this.id_quartier, this.jour, 1);
+				rocades.add(ins3);
 			}
-			//hd
+			//hd = vas du coté haut droit vers le milieu haut 
 			if((haut) && (step_hd != null) && (trap.getHD() != null)){
 				ArrayList<Cell> path_1 = zone_quartier.getCellLine(trap.getHD(), step_hd);
 				Rocade ins1 = new Rocade(path_1, 1, path_1.size(), this.id_quartier, jour);
@@ -180,16 +182,22 @@ public class Mairie extends Batiment{
 				ArrayList<Cell> path_2 = zone_quartier.getCellLine(step_hd, close);
 				Rocade ins2 = new Rocade(path_2, path_2.size(), 1, this.id_quartier, jour);
 				rocades.add(ins2);
+				//et on insere la rocade d'angle
+				Rocade ins3 = new Rocade(step_hd, this.id_quartier, this.jour, 0);
+				rocades.add(ins3);
 			}
-			//bg
+			//bg = vas du coté bas gauche vers le milieu bas
 			if((bas) && (step_bg != null) && (trap.getBG() != null)){
 				ArrayList<Cell> path_1 = zone_quartier.getCellLine(trap.getBG(), step_bg);
 				Rocade ins1 = new Rocade(path_1, 1, path_1.size(), this.id_quartier, jour);
 				rocades.add(ins1);
 				Cell close = zone_quartier.getCellRelief(Utils.floatToInt(trap.getMidX_b()), step_bg.getY());
 				ArrayList<Cell> path_2 = zone_quartier.getCellLine(step_bg, close);
-				Rocade ins2 = new Rocade(path_2, path_2.size(), 1, this.id_quartier, jour);
+				Rocade ins2 = new Rocade(path_2, path_2.size()+1, 1, this.id_quartier, jour);
 				rocades.add(ins2);
+				//et on insere la rocade d'angle
+				Rocade ins3 = new Rocade(step_bg, this.id_quartier, this.jour, 2);
+				rocades.add(ins3);
 			}
 			//bd
 			if((droite) && (step_bd != null) && (trap.getBD() != null)){
@@ -198,8 +206,11 @@ public class Mairie extends Batiment{
 				rocades.add(ins1);
 				Cell close = zone_quartier.getCellRelief(step_bd.getX(), Utils.floatToInt(trap.getMidY_d()));
 				ArrayList<Cell> path_2 = zone_quartier.getCellLine(step_bd, close);
-				Rocade ins2 = new Rocade(path_2, 1, path_2.size(), this.id_quartier, jour);
+				Rocade ins2 = new Rocade(path_2, 1, path_2.size()+1, this.id_quartier, jour);
 				rocades.add(ins2);
+				//et on insere la rocade d'angle
+				Rocade ins3 = new Rocade(step_bd, this.id_quartier, this.jour, 3);
+				rocades.add(ins3);
 			}
 		}
 	}

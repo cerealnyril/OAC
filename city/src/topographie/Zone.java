@@ -643,9 +643,10 @@ public class Zone {
 		int start_y = getStartY();
 		int end_x = getEndX();
 		int end_y = getEndY();
+//		System.out.println("Taille x "+this.taille_x+", y"+this.taille_y+" centre x "+this.getCentreX()+", y"+this.getCentreX()+" start x"+start_x+", y "+start_y+" end "+end_x+", y"+end_y);
 		for(int y = start_y; y < end_y; y++){
 	    	for(int x = start_x; x < end_x; x++){
-	    		if(x == start_x || x == (end_x-1) || y == start_y || y == (end_y-1)){
+	    		if(x == (start_x+1) || x == (end_x-1) || y == (start_y+1) || y == (end_y-1)){
 	    			Cell cell = relief.getCell(x, y);
 	    			cell.resetBlocType(Identifiants.border);
 	    			removeAvailable(cell);
@@ -669,9 +670,7 @@ public class Zone {
 			indexation(cell);
 		}
 		limit = nouvelles;
-//		refreshTaille();
 		relief.expendHeight(to_transmit, nouvelles);
-//		relief.updateCanaux(nouvelles);
 	}
 	/** enleve la limite et la transforme en cellules disponibles */
 	private void removeLimit(){

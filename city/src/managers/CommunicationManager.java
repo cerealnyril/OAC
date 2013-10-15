@@ -36,7 +36,7 @@ public class CommunicationManager {
 	private List<Cell> routes = Collections.synchronizedList(new ArrayList<Cell>());
 	private List<Cell> canaux = Collections.synchronizedList(new ArrayList<Cell>());
 	private List<Cell> chemins = Collections.synchronizedList(new ArrayList<Cell>());
-
+	
 	private Serveur serveur;
 	private static Logger logger = Logger.getLogger("serveurLog");
 	
@@ -156,7 +156,7 @@ public class CommunicationManager {
 						msg = new Message(idClient, getCellPack(route, route.getIDQuartier()), port, ia);
 						serveur.send(msg);
 					}
-					/*Iterator<Cell> iter_chemins = ParamsGlobals.VILLE.getAllChemins().iterator();
+/*					Iterator<Cell> iter_chemins = ParamsGlobals.VILLE.getAllChemins().iterator();
 					while(iter_chemins.hasNext()){
 						Cell chemin = iter_chemins.next();
 						Message msg = new Message(idClient, getCellPack(chemin, chemin.getIDQuartier()), port, ia);
@@ -185,6 +185,11 @@ public class CommunicationManager {
 		};
 		r.start();	
 	}
+	/** */
+	public void broadcastTime(int heure){
+		serveur.sendToAll(getVillePack(heure));
+	}
+	
 	/** Enclenche l'envois de tous les paquets pour les grand changements de ville */
 	public void broadcastUpdate() {
 		// lancement d'un thread pour vider les maps
@@ -240,9 +245,9 @@ public class CommunicationManager {
 		Paquet pack = new Paquet(
 								ParamsGlobals.VILLE.getHeure(),//tailleX-> heure
 								ParamsGlobals.VILLE.getAge(),//tailleY -> jour
-								0,//startX
-								0,//startY
-								0,//z
+								ParamsGlobals.MINUTES,//startX
+								ParamsGlobals.HEURES,//startY
+								ParamsGlobals.HEURES_PERIODES,//z
 								0, //texX
 								0, //texY
 								0,//rotation
@@ -327,7 +332,7 @@ public class CommunicationManager {
 								rle.getStartY()-0.5f, 
 								1, //Z
 								0, 
-								0,//rle.getTexY(), 
+								rle.getOrientation(),//rle.getTexY() -> orientation en L
 								clos, // deviens le boolean de cloture
 								rle.getType(), 
 								rle.getJour(),

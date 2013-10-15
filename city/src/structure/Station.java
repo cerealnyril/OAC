@@ -100,14 +100,14 @@ public class Station extends Batiment{
 			int id_haut = 0;
 			List<Noeud> etapes = getEtapes(limit_haut);
 			Iterator<Noeud> iter = etapes.iterator();
-			Noeud cible = null;
+			Noeud cible_n = null;
 			Rail previous = null;
 			while(iter.hasNext()){
+				cible_n = iter.next();
 				if(previous != null){
 					previous.setNext(id_haut);
 				}
-				cible = iter.next();
-				previous = makeRail(cible, id_haut, this.q_h);
+				previous = makeRail(cible_n, id_haut, this.q_h);
 				id_haut++;
 			}
 		}
@@ -115,14 +115,14 @@ public class Station extends Batiment{
 			int id_bas = 0;
 			List<Noeud> etapes = getEtapes(limit_bas);
 			Iterator<Noeud> iter = etapes.iterator();
-			Noeud cible = null;
+			Noeud cible_n = null;
 			Rail previous = null;
 			while(iter.hasNext()){
+				cible_n = iter.next();
 				if(previous != null){
 					previous.setNext(id_bas);
 				}
-				cible = iter.next();
-				previous = makeRail(cible, id_bas, this.q_b);
+				previous = makeRail(cible_n, id_bas, this.q_b);
 				id_bas++;
 			}
 		}
@@ -130,14 +130,14 @@ public class Station extends Batiment{
 			int id_gauche = 0;
 			List<Noeud> etapes = getEtapes(limit_gauche);
 			Iterator<Noeud> iter = etapes.iterator();
-			Noeud cible = null;
+			Noeud cible_n = null;
 			Rail previous = null;
 			while(iter.hasNext()){
+				cible_n = iter.next();
 				if(previous != null){
 					previous.setNext(id_gauche);
 				}
-				cible = iter.next();
-				previous = makeRail(cible, id_gauche, this.q_g);
+				previous = makeRail(cible_n, id_gauche, this.q_g);
 				id_gauche++;
 			}
 		}
@@ -145,14 +145,14 @@ public class Station extends Batiment{
 			int id_droite = 0;
 			List<Noeud> etapes = getEtapes(limit_droite);
 			Iterator<Noeud> iter = etapes.iterator();
-			Noeud cible = null; 
+			Noeud cible_n = null;
 			Rail previous = null;
 			while(iter.hasNext()){
+				cible_n = iter.next();
 				if(previous != null){
 					previous.setNext(id_droite);
 				}
-				cible = iter.next();
-				previous = makeRail(cible, id_droite, this.q_d);
+				previous = makeRail(cible_n, id_droite, this.q_d);
 				id_droite++;
 			}
 		}

@@ -7,15 +7,22 @@ public class Rocade extends EntiteStatic{
 	
 	private int jour;
 	
-	public Rocade(Vector2 position, float width, float height, int type, int id_q, int jour) {
+	public Rocade(Vector2 position, float width, float height, int type, int id_q, int jour, int orientation) {
 		super(0, position, width, height, type, id_q);
-		int genre = 0;
-		super.tex = selectTexture(genre);
+		super.tex = selectTexture(orientation);
 		this.jour = jour;
 	}
 	/** Permet de selectionner la bonne texture en fonction du type */
-	private TextureRegion selectTexture(int genre){
+	private TextureRegion selectTexture(int orientation){
 		TextureRegion res = AssetsLoader.rocade_I;
+		if(orientation == -1){
+			if(width > height){
+				res = AssetsLoader.rocade_;
+			}
+		}
+		else{
+			res = AssetsLoader.rocade_L;
+		}
 		return res;
 	}
 	

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import elements2D.AssetsLoader;
 import fenetres.ClientSelectMenu;
 import fenetres.ServerManageMenu;
 
@@ -17,7 +18,6 @@ import fenetres.ServerManageMenu;
 public class ScreenManager extends Game{
 	public SpriteBatch batch;
 	boolean mode;
-	public BitmapFont font;
 	
 	public ScreenManager(boolean mode){
 		this.mode =  mode;
@@ -25,9 +25,8 @@ public class ScreenManager extends Game{
 	
 	@Override
 	public void create() {
-
+		AssetsLoader.load();
 		batch = new SpriteBatch();
-		font = new BitmapFont();
 		if(mode){
 			this.setScreen(new ServerManageMenu(this));
 		}
@@ -42,6 +41,6 @@ public class ScreenManager extends Game{
 	
 	public void dispose() {
 		batch.dispose();
-		font.dispose();
+		AssetsLoader.dispose();
 	}
 }

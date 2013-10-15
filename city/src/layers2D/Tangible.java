@@ -7,10 +7,12 @@ import tools.Identifiants;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import elements2D.Batiment;
+import elements2D.Entite;
 import elements2D.Frontiere;
 
 /** La couche qui contient les elements avec lequels on a une interaction */
@@ -29,16 +31,13 @@ public class Tangible extends Group{
 	private Batiment getBatimentFromId(int id){
 		return batiments.get(id);
 	}
-	
-	/** Retourne les batiments de la map */
-	public Group getTangible() {
-		return this;
-	}
+
 /*-----------------------------SETTEURS UPDATES ET FONCTIONS--------------------------------*/
 	/** Gere l'arrivée de nouvelles frontieres */
 	public void upFrontiere(Frontiere frontiere){
 		//Si ce n'est pas le meme jour on vire tous le RLEs
 		if(frontieres.get(frontiere.getID_q()) != null && frontieres.get(frontiere.getID_q()).get(0).getJour() != frontiere.getJour()){
+			menageFrontiere(frontieres.get(frontiere.getID_q()));
 			frontieres.remove(frontiere.getID_q());
 			//TODO supprimer les acteurs frontiere existants 
 		}
@@ -105,5 +104,12 @@ public class Tangible extends Group{
 		return false;
 	}
 	public void update(){
+	}
+	
+	private void menageFrontiere(Array<Frontiere> to_clean){
+		Iterator<Frontiere> iter = to_clean.iterator();
+		while(iter.hasNext()){
+			this.removeActor(iter.next().getImg());
+		}
 	}
 }

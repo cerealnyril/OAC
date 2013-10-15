@@ -111,6 +111,9 @@ public class MetaManager {
 //		db.save();
 		com.broadcastUpdate();
 	}
+	public void executeTime(int heure){
+		com.broadcastTime(heure);
+	}
 /*--------------------------------------MISE A JOUR--------------------------------------------------*/
 	/** stockage d'un objet mis a jour 
 	 * @param test: un objet de n'importe quel type qui sera testé pour etre redirigé vers le 

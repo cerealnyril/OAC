@@ -1,28 +1,19 @@
 package fenetres;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import elements2D.Ville;
 import elements2D.VilleRender;
 
-import managers.ScreenManager;
-
-
 public class Vue2D  implements Screen{
-	private final ScreenManager jeu;
 	private Ville ville;
 	private VilleRender renderVille;
 	private Loading loading;
 	
 	
-	public Vue2D(ScreenManager jeu, Ville ville) {
-		this.jeu = jeu;
+	public Vue2D(Ville ville) {
 		this.ville = ville;
 		renderVille = new VilleRender(ville);
 		loading = new Loading(ville);

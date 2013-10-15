@@ -13,6 +13,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
+import elements2D.AssetsLoader;
 
 public class ServerManageMenu implements Screen {
 
@@ -43,11 +46,11 @@ public class ServerManageMenu implements Screen {
 
 		camera.update();
 		jeu.batch.setProjectionMatrix(camera.combined);
-
+		BitmapFont font = AssetsLoader.whiteFont;
 		jeu.batch.begin();
-		jeu.font.draw(jeu.batch, "Fenetre du Serveur ", 50, 480);
-		jeu.font.draw(jeu.batch, "Clients connect�s: " + ParamsGlobals.MANAGER.getServeur().registeredCount() , 600, 480);
-		jeu.font.draw(jeu.batch, ParamsGlobals.MANAGER.getServeur().getClientInfos() , 15, 300);
+		font.draw(jeu.batch, "Fenetre du Serveur ", 50, 480);
+		font.draw(jeu.batch, "Clients connectés: " + ParamsGlobals.MANAGER.getServeur().registeredCount() , 600, 480);
+		font.draw(jeu.batch, ParamsGlobals.MANAGER.getServeur().getClientInfos() , 15, 300);
 		//affichage sequentiel des clients connect�s
 		jeu.batch.end();
 		

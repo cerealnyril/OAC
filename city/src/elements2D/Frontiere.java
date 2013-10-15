@@ -13,13 +13,13 @@ public class Frontiere extends EntiteStatic{
 		super(0,position, width, height, type, id_q);
 		super.tex = AssetsLoader.frontiereI;
 		if(width > height){
-			//super.tex = TexRefs.frontiere2Tex;
+			super.tex = AssetsLoader.frontiere_;
 		}
 		this.clos = false;
 		if(clos == 1){
 			this.clos = true;
 		}
-		this.texClos = AssetsLoader.frontiereL;
+		//this.texClos = AssetsLoader.frontiereL;
 		this.jour = jour;
 	}
 	

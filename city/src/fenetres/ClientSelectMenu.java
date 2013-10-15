@@ -28,6 +28,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -40,6 +41,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
+import elements2D.AssetsLoader;
 import elements2D.Ville;
 
 /** Classe de connexion*/
@@ -48,13 +50,11 @@ public class ClientSelectMenu implements Screen {
 	private final ScreenManager jeu;
 	private Client client;
 	
-	private Texture backTex;
+	private TextureRegion backTex;
 	private Sprite backSprite;
 	private SpriteBatch batch;
 	private TweenManager manager;
 	private Stage stage;
-	private BitmapFont white, red;
-	private TextureAtlas atlas;
 	private TextButton startButton, controlButton, netButton; 
 	private Image background;
 	private Sound backSound, mouse_overSound, mouse_clickSound, menu_activateSound;
@@ -101,9 +101,8 @@ public class ClientSelectMenu implements Screen {
 
 	@Override
 	public void show() {
-		backTex = new Texture(Gdx.files.internal("menus/main.png"));
+		backTex = AssetsLoader.main;//new Texture(Gdx.files.internal("menus/main.png"));
 		//des filtres pour le scale
-		backTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backSprite = new Sprite(backTex);
 		//pour l'animation de fondu
 		backSprite.setColor(1, 1, 1, 0);
@@ -131,17 +130,14 @@ public class ClientSelectMenu implements Screen {
 	/** fenetre de chargement du menu principal aprés l'animation*/
 	private void loadMainMenu(){
 		Gdx.input.setInputProcessor(stage);
-		this.atlas = new TextureAtlas();
-		this.white = new BitmapFont(Gdx.files.internal("fonts/whitefont.fnt"), false);
-		this.red = new BitmapFont(Gdx.files.internal("fonts/redfont.fnt"), false);
 		final TextButtonStyle style_normal = new TextButtonStyle();
 		final TextButtonStyle style_over = new TextButtonStyle();
 		//sons
 		this.mouse_overSound = Gdx.audio.newSound(Gdx.files.internal("sounds/mouse_over.ogg"));
 		this.mouse_clickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/mouse_click.ogg"));
 		//styles
-		style_normal.font = white;
-		style_over.font = red;
+		style_normal.font = AssetsLoader.whiteFont;
+		style_over.font = AssetsLoader.redFont;
 		
 		background = new Image(backTex);
 		background.toBack();
@@ -267,7 +263,7 @@ public class ClientSelectMenu implements Screen {
 		}
 		Ville ville = new Ville(jeu);
 		client.setVille(ville);
-		jeu.setScreen(new Vue2D(jeu, ville));
+		jeu.setScreen(new Vue2D(ville));
 		//demande toute la ville
 		client.askForAllCity();
 		if(stage != null){
@@ -290,10 +286,6 @@ public class ClientSelectMenu implements Screen {
 
 	@Override
 	public void dispose() {
-		this.atlas.dispose();
-		this.white.dispose();
-		this.red.dispose();
-		this.backTex.dispose();
 		this.stage.dispose();
 		this.batch.dispose();
 		this.mouse_clickSound.dispose();

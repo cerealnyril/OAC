@@ -52,6 +52,7 @@ public class Initialisation {
 		setQuartiers();
 //		ville.updateTransports();
 		ParamsGlobals.MANAGER.executeManagement();
+//		ParamsGlobals.MANAGER.executeTime(0);
 		return ville;
 	}
 	/** creation de tout les quartiers de depars */

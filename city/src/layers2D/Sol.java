@@ -4,11 +4,13 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import elements2D.Bloc;
 import elements2D.Canal;
+import elements2D.Frontiere;
 import elements2D.Quartier;
 import elements2D.Rocade;
 import elements2D.Route;
@@ -20,17 +22,16 @@ public class Sol extends Group{
 	private Array<Canal> canaux;
 	private ObjectMap<Integer, Bloc> blocs;
 	private ObjectMap<Integer, Array<Rocade>> rocades;
+	private Image quartier;
 	
 	public Sol(){
 		this.blocs = new ObjectMap<Integer, Bloc>();
 		this.routes = new Array<Route>();
 		this.canaux = new Array<Canal>();
 		this.rocades = new ObjectMap<Integer, Array<Rocade>>();
+		this.quartier = null;
 	}
 /*----------------------------ACCESSEURS---------------------------*/	
-	public Group getSol(){
-		return this;
-	}
 	/** Retourne un bloc dans la map de blocs */
 	private Bloc getBlocFromId(int id){
 		return blocs.get(id);
@@ -38,7 +39,9 @@ public class Sol extends Group{
 /*---------------------------SETTEURS ET AJOUT MAJ-------------------*/
 	/** Ajoute une dalle de quartier au sol */
 	public void upQuartier(Quartier quartier){
-		this.addActor(quartier.getImg());
+		this.quartier = quartier.getImg();
+		this.addActor(this.quartier);
+		this.quartier.toBack();
 	}
 	
 	/** Ajoute une route sur le sol */
@@ -57,8 +60,8 @@ public class Sol extends Group{
 	public void upRocade(Rocade rocade){
 		//Si ce n'est pas le meme jour on vire tous le RLEs
 		if(rocades.get(rocade.getID_q()) != null && rocades.get(rocade.getID_q()).get(0).getJour() != rocade.getJour()){
+			menageRocades(rocades.get(rocade.getID_q()));
 			rocades.remove(rocade.getID_q());
-			//TODO : virer rocades 
 		}
 		//Si le rle n'est pas vide 
 		Array<Rocade> mes_rocades = new Array<Rocade>();
@@ -86,6 +89,7 @@ public class Sol extends Group{
 	
 	/** Fonction qui translate tout sur la map quand la ville grandie */
 	public void translation(int id_quartier, Vector2 translation){
+		quartier.toBack();
 		//on vas commencer par parcourir chaque liste et si ça colle en id alors on translate
 		Iterator<Integer> iter = blocs.keys().iterator();
 		Bloc bloc;
@@ -113,6 +117,13 @@ public class Sol extends Group{
 				canal.setPosition(new Vector2((canal.getPosition().x + translation.x),
 						(canal.getPosition().y + translation.y)));
 			}
+		}
+	}
+	/** Retire tout les acteurs inutiles */
+	private void menageRocades(Array<Rocade> to_clean){
+		Iterator<Rocade> iter = to_clean.iterator();
+		while(iter.hasNext()){
+			this.removeActor(iter.next().getImg());
 		}
 	}
 }

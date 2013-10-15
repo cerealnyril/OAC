@@ -274,4 +274,16 @@ public class Paquet {
 	public int getClos(){
 		return this.sens;
 	}
+	public int getOrientation(){
+		return this.texY;
+	}
+	public float getMinuteScale(){
+		return this.x;
+	}
+	public float getHeureScale(){
+		return this.y;
+	}
+	public float getHeurePeriode(){
+		return this.z;
+	}
 }

@@ -1,38 +1,27 @@
 package elements2D;
 
-//import java.util.Iterator;
-
-//import tools.Identifiants;
+import lights.RayHandler;
 
 import com.badlogic.gdx.Gdx;
-//import com.badlogic.gdx.graphics.Camera;
-//import com.badlogic.gdx.graphics.Color;
-//import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-//import com.badlogic.gdx.graphics.Texture;
-//import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.ObjectMap;
 
 /** Classe qui contient les fonctions graphiques de la ville a proprement parlé */
 public class VilleRender {
 	private Ville ville;
 	private SpriteBatch batch;
 	private Joueur joueur;
-//	private Maglev maglev;
 	private OrthographicCamera camera;
 	private float camWidth, camHeight;
-	//pour les structures statiques des tableaux 
-	ObjectMap<Integer, Batiment> batiments;
-	ObjectMap<Integer, Bloc> blocs;
+	private RayHandler handler;
 	
 	private Stage stage_monde;
+	private World world;
 	
 	public VilleRender(Ville ville){
+		
 		this.ville = ville;
 		joueur = ville.getJoueur();
 		
@@ -55,11 +44,16 @@ public class VilleRender {
 		stage_monde.addActor(ville.getTangible());
 		stage_monde.addActor(joueur.getImg());
 		stage_monde.addActor(ville.getAir());
-		stage_monde.addActor(ville.getCircadien());
 		stage_monde.setCamera(camera);
+		
+		//pour les lumières 
+		world = ville.getWorld();
+		handler = ville.getLightHandler();
+		handler.setCombinedMatrix(camera.combined);
 	}
 	
 	public void render(){
+		
 		this.camera.position.set(joueur.position.x, joueur.position.y, 0);
 		batch.setProjectionMatrix(camera.combined);
 		camera.update();
@@ -69,6 +63,8 @@ public class VilleRender {
 		batch.begin();
 			stage_monde.draw();
 		batch.end();
+		
+		handler.updateAndRender();
 	}
 	
 	public void dispose(){
